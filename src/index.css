@@ -7,12 +7,23 @@
 @import "@fontsource/montserrat/500.css";
 
 :root {
-  --brand: #005AFB;
-  --Auth-bg: #F6F8FA;
-  --Auth-head-font-color: #000712;
+  /* ==========================
+ * New Colors
+ * ========================== */
 
-  --text: #6b6375;
-  --text-h: #08060d;
+--primary-light: #E8EFF8;
+--text-secondary: #05162C;
+--gray: #6D7379;
+--main-blue: #145DB8;
+--neutral-blue: #F5F6F7;
+--text-dark: #404448;
+--error: #FC4B4E;
+--stars: #F9E000;
+--stars-bg: #F9E000;
+--success-light: #EDF7EE;
+--success: #4CAF50;
+--congratulation: #6292CF;
+
   --bg: #fff;
   --border: oklch(0.922 0 0);
   --border-secondary: #E9E9EA;
@@ -86,11 +97,24 @@
 }
 
 @theme inline {
-  --color-brand: var(--brand);
-  --color-text: var(--text);
-  --color-text-h: var(--text-h);
-  --color-Auth-bg: var(--Auth-bg);
-  --color-Auth-head-font-color: var(--Auth-head-font-color);
+  /* ==========================
+ * New Colors
+ * ========================== */
+
+--color-primary-light: var(--primary-light);
+--color-text-secondary: var(--text-secondary);
+--color-gray: var(--gray);
+--color-main-blue: var(--main-blue);
+--color-neutral-blue: var(--neutral-blue);
+--color-text-dark: var(--text-dark);
+--color-error: var(--error);
+--color-stars: var(--stars);
+--color-stars-bg: var(--stars-bg);
+--color-success-light: var(--success-light);
+--color-success: var(--success);
+--color-congratulation: var(--congratulation);
+
+
   --font-heading: var(--font-sans);
   --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
