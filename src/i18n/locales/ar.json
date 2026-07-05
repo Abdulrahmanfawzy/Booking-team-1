@@ -1,14 +1,25 @@
 {
-    "common": {
-        "welcome": "أهلاً بيك",
-        "loading": "جاري التحميل..."
-    },
-    "auth": {
-        "login": "تسجيل الدخول",
-        "logout": "تسجيل الخروج"
-    },
-    "dashboard": {
-        "title": "لوحة التحكم",
-        "users": "المستخدمين"
+  "common": {
+    "welcome": "مرحباً",
+    "loading": "جارٍ التحميل..."
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "validation": {
+      "countryCodeRequired": "برجاء اختيار كود الدولة",
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "invalidPhone": "برجاء إدخال رقم هاتف صحيح (من 7 إلى 15 رقم)",
+      "nameRequired": "الاسم بالكامل مطلوب",
+      "nameTooShort": "يجب أن يكون الاسم حرفين على الأقل",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "invalidEmail": "برجاء إدخال بريد إلكتروني صحيح",
+      "otpRequired": "كود التحقق مطلوب",
+      "otpLength": "يجب أن يتكون كود التحقق من 4 أرقام"
     }
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "users": "المستخدمين"
+  }
 }
