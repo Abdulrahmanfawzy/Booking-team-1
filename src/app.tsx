@@ -1,6 +1,7 @@
+import "./index.css";
 const App = () => {
     return (
-        <div>App</div>
+        <div className="">App</div>
     )
 }
 
