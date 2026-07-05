@@ -1,8 +1,12 @@
 import "./index.css";
-const App = () => {
-    return (
-        <div className="">App</div>
-    )
-}
+import Appointment from "@/features/AppointmentPage/AppointmentPage.jsx";
 
-export default App
+const App = () => {
+  return (
+    <div>
+      <Appointment />
+    </div>
+  );
+};
+
+export default App;

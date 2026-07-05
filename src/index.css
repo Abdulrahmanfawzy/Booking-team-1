@@ -21,6 +21,7 @@
 --success-light: #EDF7EE;
 --success: #4CAF50;
 --congratulation: #6292CF;
+--gray-border: #BBC1C7;
 
   --bg: #fff;
   --border: oklch(0.922 0 0);
@@ -129,6 +130,7 @@
 --color-success-light: var(--success-light);
 --color-success: var(--success);
 --color-congratulation: var(--congratulation);
+--color-gray-border: var(--gray-border);
 
 
   --font-heading: var(--font-sans);
