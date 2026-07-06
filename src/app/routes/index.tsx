@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import { SignInPage } from "@/features/dashboard/Auth/pages/SignInPage";
-import { SignUpPage } from "@/features/dashboard/Auth/pages/SignUpPage";
-import { VerifyOtpPage } from "@/features/dashboard/Auth/pages/VerifyOtpPage";
+import { SignInPage } from "@/features/Auth/pages/SignInPage";
+import { SignUpPage } from "@/features/Auth/pages/SignUpPage";
+import { VerifyOtpPage } from "@/features/Auth/pages/VerifyOtpPage";
 
 
 export const authRoutes = [
