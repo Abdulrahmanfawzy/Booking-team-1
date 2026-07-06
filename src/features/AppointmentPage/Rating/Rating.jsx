@@ -23,8 +23,20 @@ export default function Rating() {
 
       {/* Human Ratings */}
       <div className="grid grid-cols-2 gap-4">
-        <HumanRatingCard />
-        <HumanRatingCard />
+        <HumanRatingCard
+          image="https://randomuser.me/api/portraits/women/44.jpg"
+          name="Nabila Reyna"
+          time="30 min ago"
+          rating={4.5}
+          review="Excellent service! Dr. Jessica Turner was attentive and thorough. The clinic was clean, and the staff were friendly. Highly recommend for in-person care!"
+        />
+        <HumanRatingCard
+          image="https://randomuser.me/api/portraits/women/45.jpg"
+          name="Nabila Reyna"
+          time="45 min ago"
+          rating={4.5}
+          review="Excellent service! Dr. Jessica Turner was attentive and thorough. The clinic was clean, and the staff were friendly. Highly recommend for in-person care!"
+        />
       </div>
     </div>
   );
