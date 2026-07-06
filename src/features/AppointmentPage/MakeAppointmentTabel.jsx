@@ -1,7 +1,7 @@
 import { ArrowLeft, CalendarDays } from "lucide-react";
 import { useRef, useState } from "react";
-import Day from "./Day";
-import Hour from "./Hour";
+import Day from "./components/Day";
+import Hour from "./components/Hour";
 
 export default function MakeAppointmentTabel() {
   const dateInput = useRef(null);
