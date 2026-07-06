@@ -2,9 +2,13 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
+@theme {
+  --font-georgia: Georgia, serif;
+}
 
-@import "@fontsource/montserrat/400.css";
-@import "@fontsource/montserrat/500.css";
+body {
+  font-family: var(--font-georgia);
+}
 
 :root {
   /* ==========================
@@ -54,46 +58,64 @@
   }
 
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
 
-  /* 👇 ADDED: exact colors from the Figma "Cure" auth screens */
-  --auth-brand-50: #E8EFF8;
-  --auth-brand-600: #145DB8;
-  --auth-brand-700: #0F4A94;
-  --auth-heading: #05162C;
-  --auth-body: #6D7379;
-  --auth-body-dark: #404448;
-  --auth-info: #1490E3;
-  --auth-neutral-300: #99A2AB;
-  --auth-divider: #BBC1C7;
+  --foreground: oklch(0.145 0 0);
+
+  --card: oklch(1 0 0);
+
+  --card-foreground: oklch(0.145 0 0);
+
+  --popover: oklch(1 0 0);
+
+  --popover-foreground: oklch(0.145 0 0);
+
+  --primary: oklch(0.205 0 0);
+
+  --primary-foreground: oklch(0.985 0 0);
+
+  --secondary: oklch(0.97 0 0);
+
+  --secondary-foreground: oklch(0.205 0 0);
+
+  --muted: oklch(0.97 0 0);
+
+  --muted-foreground: oklch(0.556 0 0);
+
+  --accent-foreground: oklch(0.205 0 0);
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --input: oklch(0.922 0 0);
+
+  --ring: oklch(0.708 0 0);
+
+  --chart-1: oklch(0.87 0 0);
+
+  --chart-2: oklch(0.556 0 0);
+
+  --chart-3: oklch(0.439 0 0);
+
+  --chart-4: oklch(0.371 0 0);
+
+  --chart-5: oklch(0.269 0 0);
+
+  --radius: 0.625rem;
+
+  --sidebar: oklch(0.985 0 0);
+
+  --sidebar-foreground: oklch(0.145 0 0);
+
+  --sidebar-primary: oklch(0.205 0 0);
+
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+
+  --sidebar-accent: oklch(0.97 0 0);
+
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+
+  --sidebar-border: oklch(0.922 0 0);
+
+  --sidebar-ring: oklch(0.708 0 0)
 }
 
 @theme inline {
@@ -156,23 +178,6 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-
-  /* ADDED: these are what button.tsx / input.tsx / AuthLayout.tsx / PhoneInput.tsx
-     actually reference (bg-brand-600, text-heading, text-body, font-montserrat...).
-     Without these lines, those classes silently produce no CSS.
-     NOTE: kept as --font-auth-heading (not --font-heading) since that name is
-     already mapped to Geist above for the rest of the app — don't want to
-     override that globally. */
-  --color-brand-50: var(--auth-brand-50);
-  --color-brand-600: var(--auth-brand-600);
-  --color-brand-700: var(--auth-brand-700);
-  --color-heading: var(--auth-heading);
-  --color-body: var(--auth-body);
-  --color-neutral-300: var(--auth-neutral-300);
-  --color-neutral-400: var(--auth-neutral-300);
-  --color-divider: var(--auth-divider);
-  --font-auth-heading: Georgia, "Times New Roman", serif;
-  --font-montserrat: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer utilities {
