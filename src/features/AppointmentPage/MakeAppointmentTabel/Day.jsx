@@ -1,12 +1,13 @@
-export default function Day({day, hour, isActive}) {
-
-    const disactiveStyle ="bg-gray-100 w-13 text-center rounded-sm py-2 text-gray-500"
-    const activeStyle = ""
-
+export default function Day({ day, date, isActive, onClick }) {
   return (
-    <div className="bg-main-blue w-13 text-center rounded-sm py-2 text-white">
+    <button
+      onClick={onClick}
+      className={`w-13 rounded-sm py-2 text-center cursor-pointer transition-colors ${
+        isActive ? "bg-main-blue text-white" : "bg-gray-100 text-gray-500"
+      }`}
+    >
       <p>{day}</p>
-      <p>{hour}</p>
-    </div>
+      <p>{date}</p>
+    </button>
   );
 }
