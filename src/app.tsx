@@ -1,12 +1,12 @@
-import "./index.css";
-import Appointment from "@/features/AppointmentPage/AppointmentPage.jsx";
+import { AppProviders } from "@/app/providers/AppProviders";
+import { AppRouter } from "@/app/routes";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <Appointment />
-    </div>
+    <AppProviders>
+      <AppRouter />
+    </AppProviders>
   );
-};
+}
 
 export default App;
