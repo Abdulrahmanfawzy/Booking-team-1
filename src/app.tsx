@@ -1,7 +1,10 @@
+import SearchDoctorsPage from "./app/routes/SearchDoctors";
 import "./index.css";
 const App = () => {
     return (
-        <div className="">App</div>
+        <div className="">
+            <SearchDoctorsPage/>
+        </div>
     )
 }
 

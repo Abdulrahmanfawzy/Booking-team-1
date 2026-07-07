@@ -179,3 +179,9 @@
     @apply scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100;
   }
 }
+
+#search-doctors button:hover{
+  color: var(--color-main-blue);
+  background-color:white;
+  border-color: var(--color-main-blue);
+}
