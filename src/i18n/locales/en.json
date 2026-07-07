@@ -1,14 +1,25 @@
 {
-    "common": {
-        "welcome": "Welcome",
-        "loading": "Loading..."
-    },
-    "auth": {
-        "login": "Login",
-        "logout": "Logout"
-    },
-    "dashboard": {
-        "title": "Dashboard",
-        "users": "Users"
+  "common": {
+    "welcome": "Welcome",
+    "loading": "Loading..."
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "validation": {
+      "countryCodeRequired": "Please select your country code",
+      "phoneRequired": "Phone number is required",
+      "invalidPhone": "Please enter a valid phone number (7-15 digits)",
+      "nameRequired": "Full name is required",
+      "nameTooShort": "Name must be at least 2 characters",
+      "emailRequired": "Email address is required",
+      "invalidEmail": "Please enter a valid email address",
+      "otpRequired": "OTP code is required",
+      "otpLength": "OTP must be exactly 4 digits"
     }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "users": "Users"
+  }
 }

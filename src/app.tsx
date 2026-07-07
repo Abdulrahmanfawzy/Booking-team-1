@@ -1,11 +1,12 @@
-import SearchDoctorsPage from "./app/routes/SearchDoctors";
-import "./index.css";
-const App = () => {
-    return (
-        <div className="">
-            <SearchDoctorsPage/>
-        </div>
-    )
+import { AppProviders } from "@/app/providers/AppProviders";
+import { AppRouter } from "@/app/routes";
+
+function App() {
+  return (
+    <AppProviders>
+      <AppRouter />
+    </AppProviders>
+  );
 }
 
-export default App
+export default App;
