@@ -23,13 +23,14 @@ const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/login" replace /> },
   ...authRoutes,
   // ...other routes 
-  {path:"/booking", element:<Booking/>},
+  
   {
     element: <MainLayout />,
     children: [
       { path: "/home", element: <HomePage /> },
       { path: "/appointments", element: <AppointmentPage /> },
       { path: "/profile", element: <ProfilePage /> },
+      {path:"/booking", element:<Booking/>},
     ],
   },
 ]);
