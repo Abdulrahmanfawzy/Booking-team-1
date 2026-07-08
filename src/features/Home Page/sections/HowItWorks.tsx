@@ -28,8 +28,8 @@ export default function HowItWorks() {
 
       <div className="mx-auto mt-10 grid max-w-5xl gap-6 lg:grid-cols-3 ">
         {STEPS.map((step, i) => (
-          <div key={step.title} className="flex flex-col gap-4 border p-2 border-gray-300 rounded-2xl">
-            <StepVisual index={i} />
+          <div key={step.title} className="flex flex-col  gap-4 border p-2 border-gray-300 rounded-2xl">
+            <StepVisual index={i}  />
             <div className=" ">
               <h3 className="text-sm font-semibold text-slate-900">
                 {step.title}

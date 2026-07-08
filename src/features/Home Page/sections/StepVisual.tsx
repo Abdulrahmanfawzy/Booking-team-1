@@ -10,7 +10,7 @@ import {
 export default function StepVisual({ index }: { index: number }) {
   if (index === 0) {
     return (
-      <div className="flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+      <div className="flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 h-42 pt-10 ">
         <div className="flex justify-center gap-1 text-blue-300">
           {"☆★☆★☆★☆★☆★☆★".split("").map((c, i) => (
             <span key={i} className={c === "★" ? "text-blue-500" : ""}>
@@ -42,7 +42,7 @@ export default function StepVisual({ index }: { index: number }) {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const dates = [9, 11, 12, 13, 14, 15, 16];
     return (
-      <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+      <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4 h-42 pt-10">
         <div className="mb-3 flex items-center justify-between text-xs font-medium text-slate-700">
           <ChevronLeft size={14} />
           <span>July 2025</span>
@@ -68,7 +68,7 @@ export default function StepVisual({ index }: { index: number }) {
   }
 
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 text-[11px] text-slate-600">
+    <div className="flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 text-[11px] text-slate-600 h-42">
       <div className="flex items-center gap-2 rounded-lg bg-white px-3 py-2 shadow-sm">
         <Smartphone size={14} className="text-slate-900" /> Quick checkout with
         your device

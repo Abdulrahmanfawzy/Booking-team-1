@@ -22,7 +22,7 @@ const REVIEW_AVATARS = [11, 22, 5, 15, 8];
 export default function Hero() {
     return (
         <div>
-            <section className="relative overflow-hidden px-4 pb-20 pt-16 sm:px-6 lg:px-10">
+            <section className="relative overflow-hidden px-4 pb-20 md:pt-16 sm:px-6 lg:px-10">
                 {/* decorative backdrop */}
                 <div
                     aria-hidden
