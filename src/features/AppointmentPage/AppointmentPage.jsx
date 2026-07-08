@@ -44,6 +44,9 @@ export default function AppointmentPage() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Payment Modal */}
+      {/* <PaymentModal /> */}
     </>
   );
 }

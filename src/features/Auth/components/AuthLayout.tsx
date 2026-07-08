@@ -4,7 +4,7 @@ import { BsHeartPulse } from "react-icons/bs";
 interface AuthLayoutProps {
   title: string;
   subtitle: string;
-  children: ReactNode;
+  children: ReactNode;  //lform
   footer?: ReactNode;
 }
 
