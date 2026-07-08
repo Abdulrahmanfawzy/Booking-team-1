@@ -11,27 +11,25 @@
  * New Colors
  * ========================== */
 
-  --primary-light: #e8eff8;
-  --text-secondary: #05162c;
-  --gray: #6d7379;
-  --main-blue: #145db8;
-  --neutral-blue: #f5f6f7;
-  --text-dark: #404448;
-  --error: #fc4b4e;
-  --stars: #f9e000;
-  --stars-bg: #f9e000;
-  --success-light: #edf7ee;
-  --success: #4caf50;
-  --congratulation: #6292cf;
-  --border-avatar: linear-gradient(135deg, #ffffff 30%, var(--main-blue) 100%);
-  --gray-border: #bbc1c7;
-  --brand: #005afb;
-  --Auth-bg: #f6f8fa;
+--primary-light: #E8EFF8;
+--text-secondary: #05162C;
+--gray: #6D7379;
+--main-blue: #145DB8;
+--neutral-blue: #F5F6F7;
+--text-dark: #404448;
+--error: #FC4B4E;
+--stars: #F9E000;
+--stars-bg: #F9E000;
+--success-light: #EDF7EE;
+--success: #4CAF50;
+--congratulation: #6292CF;
+--gray-border: #BBC1C7;
+  --brand: #005AFB;
+  --Auth-bg: #F6F8FA;
   --Auth-head-font-color: #000712;
 
   --text: #6b6375;
   --text-h: #08060d;
-
   --bg: #fff;
   --border: oklch(0.922 0 0);
   --border-secondary: #e9e9ea;
@@ -93,21 +91,35 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* 👇 ADDED: exact colors from the Figma "Cure" auth screens */
-  --auth-brand-50: #e8eff8;
-  --auth-brand-600: #145db8;
-  --auth-brand-700: #0f4a94;
-  --auth-heading: #05162c;
-  --auth-body: #6d7379;
+  --auth-brand-50: #E8EFF8;
+  --auth-brand-600: #145DB8;
+  --auth-brand-700: #0F4A94;
+  --auth-heading: #05162C;
+  --auth-body: #6D7379;
   --auth-body-dark: #404448;
-  --auth-info: #1490e3;
-  --auth-neutral-300: #99a2ab;
-  --auth-divider: #bbc1c7;
+  --auth-info: #1490E3;
+  --auth-neutral-300: #99A2AB;
+  --auth-divider: #BBC1C7;
 }
 
 @theme inline {
   /* ==========================
  * New Colors
  * ========================== */
+
+--color-primary-light: var(--primary-light);
+--color-text-secondary: var(--text-secondary);
+--color-gray: var(--gray);
+--color-main-blue: var(--main-blue);
+--color-neutral-blue: var(--neutral-blue);
+--color-text-dark: var(--text-dark);
+--color-error: var(--error);
+--color-stars: var(--stars);
+--color-stars-bg: var(--stars-bg);
+--color-success-light: var(--success-light);
+--color-success: var(--success);
+--color-congratulation: var(--congratulation);
+--color-gray-border: var(--gray-border);
 
   --color-primary-light: var(--primary-light);
   --color-text-secondary: var(--text-secondary);
@@ -130,6 +142,11 @@
   --color-Auth-bg: var(--Auth-bg);
   --color-Auth-head-font-color: var(--Auth-head-font-color);
 
+  --color-brand: var(--brand);
+  --color-text: var(--text);
+  --color-text-h: var(--text-h);
+  --color-Auth-bg: var(--Auth-bg);
+  --color-Auth-head-font-color: var(--Auth-head-font-color);
   --font-heading: var(--font-sans);
   --font-sans: "Geist Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
