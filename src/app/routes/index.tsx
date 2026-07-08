@@ -5,6 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import { SignInPage } from "@/features/Auth/pages/SignInPage";
 import { SignUpPage } from "@/features/Auth/pages/SignUpPage";
 import { VerifyOtpPage } from "@/features/Auth/pages/VerifyOtpPage";
+import Booking from "@/features/Booking/Booking";
 
 // Real pages — wrapped in MainLayout
 import HomePage from "@/features/Home Page/pages/HomePage";
@@ -21,6 +22,8 @@ const router = createBrowserRouter([
   // Root redirect
   { path: "/", element: <Navigate to="/login" replace /> },
   ...authRoutes,
+  // ...other routes 
+  {path:"/booking", element:<Booking/>},
   {
     element: <MainLayout />,
     children: [
