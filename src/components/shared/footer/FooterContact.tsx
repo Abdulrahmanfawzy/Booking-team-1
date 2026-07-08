@@ -21,15 +21,15 @@ const contacts = [
 export default function FooterContact() {
   return (
     <div className="text-center md:text-left">
-      <h3 className="mb-6 text-2xl font-semibold text-white">
+      <h3 className="mb-4 text-xl font-semibold text-white">
         Contact
       </h3>
 
-      <div className="space-y-5">
+      <div className="space-y-3">
         {contacts.map(({ icon: Icon, title, value }) => (
           <div
             key={title}
-            className="flex items-start justify-center gap-4 md:justify-start"
+            className="flex items-start justify-center gap-2 md:justify-start"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10">
               <Icon
@@ -40,11 +40,11 @@ export default function FooterContact() {
             </div>
 
             <div>
-              <p className="text-sm text-gray-400">
+              <p className="text-xs text-gray-400">
                 {title}
               </p>
 
-              <p className="mt-1 text-sm leading-6 text-white">
+              <p className="mt-1 text-xs leading-6 text-white">
                 {value}
               </p>
             </div>

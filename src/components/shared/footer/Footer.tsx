@@ -5,7 +5,7 @@ import FooterContact from "./FooterContact";
 export default function Footer() {
   return (
     <footer className="bg-[#071B39] text-white">
-      <div className="mx-auto max-w-7xl px-6 pt-12 pb-5">
+      <div className="mx-auto max-w-7xl px-6 pt-32 pb-2">
         {/* Top */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <FooterBrand />
@@ -30,8 +30,8 @@ export default function Footer() {
 
         {/* Bottom */}
 
-        <div className="mt-8 border-t border-white/10 pt-4">
-          <div className="flex flex-col items-center justify-between gap-4 text-sm text-gray-300 md:flex-row">
+        <div className="mt-4 border-t border-white/10 pt-2">
+          <div className="flex flex-col items-center justify-between gap-4 text-xs text-gray-300 md:flex-row">
             <p>©2024 Techvio - All Right Reserved</p>
 
             <div className="flex items-center gap-2">
@@ -41,7 +41,7 @@ export default function Footer() {
 
               <span>|</span>
 
-              <button className="hover:text-white transition">
+              <button className="hover:text-white transition text-xs">
                 Privacy Policy
               </button>
             </div>
