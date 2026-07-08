@@ -11,6 +11,8 @@ import Booking from "@/features/Booking/Booking";
 import HomePage from "@/features/Home Page/pages/HomePage";
 import AppointmentPage from "@/features/AppointmentPage/AppointmentPage.jsx";
 import ProfilePage from "@/features/profilepage/ProfilePage";
+import SearchDoctorsPage from "./SearchDoctors";
+
 
 export const authRoutes = [
   { path: "/login", element: <SignInPage /> },
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
       { path: "/appointments", element: <AppointmentPage /> },
       { path: "/profile", element: <ProfilePage /> },
       {path:"/booking", element:<Booking/>},
+      {path:"/search", element:<SearchDoctorsPage/>},
     ],
   },
 ]);

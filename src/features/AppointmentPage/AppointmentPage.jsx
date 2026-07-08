@@ -25,8 +25,6 @@ export default function AppointmentPage() {
 
   return (
     <>
-      {/* Nav */}
-      <Nav />
 
       {/* Appointment Page */}
       <div className="grid grid-cols-3 mx-10 gap-5 py-10">
@@ -42,8 +40,8 @@ export default function AppointmentPage() {
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer />
+   
+    
 
       {/* Payment Modal */}
       {/* <PaymentModal /> */}
