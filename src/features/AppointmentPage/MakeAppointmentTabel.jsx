@@ -2,19 +2,24 @@ import { ArrowLeft, CalendarDays } from "lucide-react";
 import { useRef, useState } from "react";
 import Day from "./components/Day";
 import Hour from "./components/Hour";
+import PaymentModal from "./components/PaymentModal";
 
-export default function MakeAppointmentTabel() {
+export default function MakeAppointmentTabel({doctor}) {
   const dateInput = useRef(null);
 
   const [activeDay, setActiveDay] = useState(null);
   const [activeHour, setActiveHour] = useState(null);
+
+  // open and close payment modal
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false)
+
   // The calender data
   const [selectedMonth, setSelectedMonth] = useState("");
   // To show the name of the month
   const monthName = selectedMonth
     ? new Date(`${selectedMonth}-01`).toLocaleString("en-US", {
-        month: "long",
-      })
+      month: "long",
+    })
     : "";
 
   const freeDays = [
@@ -105,11 +110,25 @@ export default function MakeAppointmentTabel() {
             )}
           </div>
 
-          <button className="px-10 py-3 border-[1.5px] border-main-blue rounded-sm bg-white text-main-blue font-medium transition-colors hover:bg-main-blue hover:text-white active:scale-95">
+          <button className="px-10 py-3 border-[1.5px] border-main-blue rounded-sm bg-white text-main-blue font-medium transition-colors hover:bg-main-blue hover:text-white active:scale-95"
+            onClick={() => { setIsPaymentOpen(true) }}
+          >
             Book
           </button>
         </div>
       </div>
+      {/* Payment Modal */}
+        <PaymentModal
+          isOpen={isPaymentOpen}
+          onClose={() => setIsPaymentOpen(false)}
+          doctor={doctor}
+          appointment={
+            activeDay !== null && activeHour !== null
+              ? `${freeDays[activeDay][0]}, ${monthName} ${freeDays[activeDay][1]} - ${freeHours[activeHour]}`
+              : ""
+          }
+          price={350}
+        />
     </>
   );
 }
