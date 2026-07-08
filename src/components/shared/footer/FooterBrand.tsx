@@ -16,31 +16,31 @@ export default function FooterBrand() {
     <div className="text-center md:text-left">
       {/* Logo */}
       <div className="flex items-center justify-center gap-3 md:justify-start">
-        <img src={logo} alt="" />
-        <h2 className="text-3xl text-white">
+        <img src={logo} className="size-10" alt="" />
+        <h2 className="text-xl text-white">
           Cure
         </h2>
       </div>
 
       {/* Description */}
-      <p className="mx-auto mt-6 max-w-[260px] text-sm leading-7 text-gray-300 md:mx-0">
+      <p className="mx-auto mt-2 max-w-[260px] text-xs leading-7 text-gray-300 md:mx-0">
         Cure helps you find trusted doctors,
         book appointments, and manage your
         health quickly and easily.
       </p>
 
       {/* Social Icons */}
-      <div className="mt-6 flex justify-center gap-3 md:justify-start">
+      <div className="mt-4 flex justify-center gap-3 md:justify-start">
         {socialLinks.map(({ icon, alt, href }) => (
           <a
             key={alt}
             href={href}
-            className="flex h-12 w-12 items-center justify-center rounded-md bg-white transition hover:scale-105"
+            className="flex items-center justify-center transition hover:scale-105"
           >
             <img
               src={icon}
               alt={alt}
-              className="h-10 w-10 object-contain"
+              className="h-7 w-7"
             />
           </a>
         ))}

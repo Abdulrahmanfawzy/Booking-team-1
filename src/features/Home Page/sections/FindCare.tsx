@@ -114,9 +114,9 @@ export default function FindCare() {
             fill="none"
           />
         </svg>
- 
         {/* Map area */}
-        <div className="relative h-64 sm:h-80 lg:h-96">
+        <div className="map-container">
+          <div className="relative h-64 sm:h-80 lg:h-96">
           {/* Location pins */}
           {pins.map((pin) => (
             <div
@@ -153,8 +153,7 @@ export default function FindCare() {
             <div className="absolute inset-0 animate-ping rounded-full bg-green-400/40" />
           </div>
         </div>
- 
-        {/* Bottom bar */}
+          {/* Bottom bar */}
         <div className="flex flex-col gap-2 border-t border-slate-100 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
           <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
             <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
@@ -165,6 +164,7 @@ export default function FindCare() {
           <button className="self-start text-xs font-medium text-blue-600 transition hover:underline sm:self-auto">
             Open full map →
           </button>
+        </div>
         </div>
       </div>
     </section>
