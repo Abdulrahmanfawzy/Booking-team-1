@@ -1,6 +1,6 @@
 import { Pencil } from "lucide-react";
-import StarsRating from "./StarsRating";
-import HumanRatingCard from "./HumanRatingCard";
+import StarsRating from "./components/StarsRating";
+import HumanRatingCard from "./components/HumanRatingCard";
 
 export default function Rating() {
   return (
