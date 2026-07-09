@@ -4,6 +4,7 @@ import FooterContact from "./FooterContact";
 
 export default function Footer() {
   return (
+    
     <footer className="bg-[#071B39] text-white">
       <div className="mx-auto max-w-7xl px-6 pt-32 pb-2">
         {/* Top */}

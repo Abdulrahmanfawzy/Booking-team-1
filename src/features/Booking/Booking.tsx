@@ -4,7 +4,7 @@ import BookingCards from './components/BookingCards'
 
 export default function Booking() {
     return (
-        <div className='container mx-auto  px-12 py-5'>
+        <div className='container mx-auto py-5'>
             <div className='flex justify-between items-center'>
                 <div className='space-y-2'>
                     <h1 className='font-bold text-2xl'>Your Appointments</h1>

@@ -17,7 +17,7 @@ function SearchDoctorsPage() {
         // <SidebarProvider open={openSide} className='max-w-7xl mx-auto px-5'>
         //     <DoctorsSidebar/>
         
-        <div className="max-w-7xl flex flex-col gap-6 py-4 px-10 mx-auto" id="search-doctors">
+        <div className="max-w-7xl flex flex-col gap-6 py-4  mx-auto" id="search-doctors">
 
                     <div className="flex gap-5 justify-between">
                         <FilterBtn open={openSide} setOpen={setOpenSide}/>
