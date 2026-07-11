@@ -2,9 +2,7 @@ import MakeAppointmentTabel from "./MakeAppointmentTabel";
 import Rating from "./Rating";
 import DoctorProfile from "./DoctorProfile";
 
-import Nav from "../../components/shared/nav/Nav";
-import Footer from "../../components/shared/footer/Footer";
-import PaymentModal from "./components/PaymentModal";
+
 
 export default function AppointmentPage() {
   const doctor = {
