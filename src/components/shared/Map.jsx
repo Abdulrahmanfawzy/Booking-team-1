@@ -4,7 +4,7 @@ export default function Map({
     center,
     markerPosition,
     popupContent,
-    className = "h-[400px] w-full",
+    className = "h-[400px] w-full z-1",
 }) {
     return (
         <MapContainer
