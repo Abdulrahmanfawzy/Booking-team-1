@@ -10,6 +10,7 @@ import Booking from "@/features/Booking/Booking";
 // Real pages — wrapped in MainLayout
 import HomePage from "@/features/Home Page/pages/HomePage";
 import AppointmentPage from "@/features/AppointmentPage/AppointmentPage.jsx";
+import ContactUs from "@/features/ContactUs/ContactUs";
 import ProfilePage from "@/features/profilepage/ProfilePage";
 import SearchDoctorsPage from "./SearchDoctors";
 
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <ProfilePage /> },
       {path:"/booking", element:<Booking/>},
       {path:"/search", element:<SearchDoctorsPage/>},
+      { path: "/contact-us", element: <ContactUs /> },
     ],
   },
 ]);
