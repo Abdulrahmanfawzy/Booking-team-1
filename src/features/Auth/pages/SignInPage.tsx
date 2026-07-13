@@ -2,40 +2,55 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 import { AuthLayout } from "../components/AuthLayout";
-import { PhoneInput } from "../components/PhoneInput";
+import { GoogleSignInButton } from "../components/GoogleSignInButton";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { signInSchema, type SignInSchema } from "../schemas/auth.schemas";
-import { useSignIn } from "../hooks/useAuthMutations";
-import { DEFAULT_COUNTRY } from "../constants/countries";
+import { useSignIn, useGoogleLogin } from "../hooks/useAuthMutations";
+import { getApiErrorMessage } from "@/services/axiosInstance";
 
 export function SignInPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { mutate, isPending } = useSignIn();
+  const { mutate: googleLoginMutate, isPending: isGooglePending } = useGoogleLogin();
 
   const {
-    watch,
-    setValue,
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
-    defaultValues: { countryCode: DEFAULT_COUNTRY.code, phone: "" },
+    mode: "onChange",
+    defaultValues: { phone: "", password: "" },
   });
-
-  const countryCode = watch("countryCode");
-  const phone = watch("phone");
 
   const onSubmit = (values: SignInSchema) => {
     mutate(values, {
       onSuccess: () => {
-        navigate("/verify-otp", { state: { phone: values.phone } });
+        navigate("/profile", { replace: true });
       },
-      onError: () => {
-        toast.error(t("auth.validation.invalidPhone", "Invalid phone number"));
+      onError: (error) => {
+        toast.error(getApiErrorMessage(error));
+      },
+    });
+  };
+
+  const handleGoogleSuccess = (idToken: string) => {
+    googleLoginMutate(idToken, {
+      onSuccess: (response) => {
+        if (response.data?.requires_phone && response.data.temp_token) {
+          navigate("/complete-google-registration", {
+            state: { tempToken: response.data.temp_token },
+          });
+          return;
+        }
+        navigate("/profile", { replace: true });
+      },
+      onError: (error) => {
+        toast.error(getApiErrorMessage(error));
       },
     });
   };
@@ -43,63 +58,79 @@ export function SignInPage() {
   return (
     <AuthLayout
       title={t("auth.signIn.title", "Sign in")}
-      subtitle={t("auth.signIn.subtitle", "Please Enter your phone number")}
+      subtitle={t("auth.signIn.subtitle", "Please enter your phone number")}
       footer={
-        <p className="text-sm font-medium text-[#99A2AB] tracking-[0%] leading-[100%]">
+        <p className="font-montserrat text-sm text-neutral-400">
           {t("auth.signIn.noAccount", "Don't have an account?")}{" "}
-          <Link to="/signup" className="text-[#145DB8] font-medium hover:underline">
+          <Link to="/signup" className="text-brand-600">
             {t("auth.signIn.signUpLink", "Sign up")}
           </Link>
         </p>
       }
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-4">
-        
-        {/* Phone number input field */}
-        <div className="flex flex-col gap-1 text-left">
-          <PhoneInput
-            countryCode={countryCode}
-            phone={phone}
-            onCountryChange={(code) => setValue("countryCode", code)}
-            onPhoneChange={(value) => setValue("phone", value, { shouldValidate: true })}
+        <div className="flex flex-col gap-1">
+          <Input
+            type="tel"
+            inputMode="numeric"
+            {...register("phone")}
             placeholder={t("auth.signIn.phonePlaceholder", "Enter your number")}
             error={!!errors.phone}
           />
           {errors.phone && (
-            <span className="text-xs text-red-500 mt-1">
-              {t(errors.phone.message ?? "")}
+            <span className="font-montserrat text-xs text-red-500">
+              {t(errors.phone.message ?? "", "Invalid phone number")}
             </span>
           )}
         </div>
 
-        <div className="flex flex-col gap-4 mt-2">
-          {/* Main Sign-In button */}
-          <Button 
-            type="submit" 
-            isLoading={isPending}
-            className="w-full h-[48px] bg-[#145DB8] hover:bg-[#104b94] text-white rounded-[8px] text-base font-medium transition-colors"
+        <div className="flex flex-col gap-1">
+          <Input
+            type="password"
+            {...register("password")}
+            placeholder={t("auth.signIn.passwordPlaceholder", "Password")}
+            error={!!errors.password}
+          />
+          {errors.password && (
+            <span className="font-montserrat text-xs text-red-500">
+              {t(errors.password.message ?? "", "This field is required")}
+            </span>
+          )}
+          <Link
+            to="/forgot-password"
+            className="self-end font-montserrat text-xs text-brand-600"
           >
-            {isPending ? t("auth.signIn.submitting", "Submitting...") : t("auth.signIn.submit", "Sign in")}
+            {t("auth.signIn.forgotPassword", "Forgot password?")}
+          </Link>
+        </div>
+
+        <div className="mt-4 flex flex-col gap-4">
+          <Button
+            className="w-full h-[48px] bg-[#145DB8] hover:bg-[#104b94] text-white rounded-[8px] text-base font-medium transition-colors"
+            type="submit"
+            isLoading={isPending}
+          >
+            {isPending
+              ? t("auth.signIn.submitting", "Signing in...")
+              : t("auth.signIn.submit", "Sign in")}
           </Button>
 
-          {/* Divider line (Or) */}
-          <div className="flex items-center gap-2 my-1">
-            <div className="h-px flex-1 bg-[#99A2AB]/20" />
-            <span className="text-sm text-[#99A2AB]">
+          <div className="flex items-center gap-2">
+            <div className="h-px flex-1 bg-divider" />
+            <span className="font-montserrat text-base text-neutral-400">
               {t("auth.signIn.or", "or")}
             </span>
-            <div className="h-px flex-1 bg-[#99A2AB]/20" />
+            <div className="h-px flex-1 bg-divider" />
           </div>
 
-          {/* Google authentication button */}
-          <Button 
-            type="button" 
-            variant="outline" 
-            className="w-full h-[48px] border-[#99A2AB]/30 text-[#05162C] rounded-[8px] gap-2 hover:bg-slate-50 text-sm font-medium"
-          >
-            <FcGoogle className="h-5 w-5" />
-            {t("auth.signIn.googleSignIn", "Sign in with Google")}
-          </Button>
+          <GoogleSignInButton
+            label={t("auth.signIn.googleSignIn", "Sign in with Google")}
+            onSuccess={handleGoogleSuccess}
+            onError={() =>
+              toast.error(t("auth.signIn.googleError", "Google sign-in failed"))
+            }
+            disabled={isGooglePending}
+          />
         </div>
       </form>
     </AuthLayout>

@@ -4,13 +4,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthLayout } from "../components/AuthLayout";
 import { OtpInput } from "../components/OtpInput";
 import { Button } from "@/components/ui/button";
-import { useVerifyOtp, useResendOtp } from "../hooks/useAuthMutations";
+import { useVerifyResetOtp, useForgotPassword } from "../hooks/useAuthMutations";
 import { useCountdown } from "../hooks/useCountdown";
 import { getApiErrorMessage } from "@/services/axiosInstance";
 
 const RESEND_SECONDS = 60;
 
-export function VerifyOtpPage() {
+export function VerifyResetOtpPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,12 +19,10 @@ export function VerifyOtpPage() {
   const [otp, setOtp] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOtp();
-  const { mutate: resendOtp, isPending: isResending } = useResendOtp();
+  const { mutate: verifyResetOtp, isPending: isVerifying } = useVerifyResetOtp();
+  const { mutate: resendOtp, isPending: isResending } = useForgotPassword();
   const { secondsLeft, isFinished, restart } = useCountdown(RESEND_SECONDS);
 
-  // Shouldn't normally happen (means someone landed here directly), but
-  // guard against a missing phone rather than crashing on API calls.
   if (!phone) {
     return (
       <AuthLayout title={t("auth.verifyOtp.title")} subtitle={t("auth.verifyOtp.subtitle")}>
@@ -32,9 +30,9 @@ export function VerifyOtpPage() {
           <p className="font-montserrat text-sm text-red-500">
             {t("auth.verifyOtp.missingPhone")}
           </p>
-          <Button 
-           className="w-full h-[48px] bg-[#145DB8] hover:bg-[#104b94] text-white rounded-[8px] text-base font-medium transition-colors"
-          onClick={() => navigate("/signup")}>{t("auth.signUp.title")}</Button>
+          <Button onClick={() => navigate("/forgot-password")}>
+            {t("auth.forgotPassword.title")}
+          </Button>
         </div>
       </AuthLayout>
     );
@@ -47,13 +45,13 @@ export function VerifyOtpPage() {
 
   const handleVerify = () => {
     if (otp.length < 4) return;
-    verifyOtp(
-      { phone, values: { otp } },
+    verifyResetOtp(
+      { phone, otp },
       {
-        onSuccess: () => {
-          // Verifying the phone doesn't log the user in (no token in this
-          // response) — send them to sign in next.
-          navigate("/login", { replace: true });
+        onSuccess: (data) => {
+          navigate("/reset-password", {
+            state: { phone, resetToken: data.data.reset_token },
+          });
         },
         onError: (error) => {
           setErrorMessage(getApiErrorMessage(error));
@@ -98,11 +96,7 @@ export function VerifyOtpPage() {
                   {t("auth.verifyOtp.resend")}
                 </button>
                 <span className="text-neutral-400">{t("auth.verifyOtp.or")}</span>
-                <button
-                  type="button"
-                  onClick={() => navigate(-1)}
-                  className="text-brand-600"
-                >
+                <button type="button" onClick={() => navigate(-1)} className="text-brand-600">
                   {t("auth.verifyOtp.enterAnotherPhone")}
                 </button>
               </div>
