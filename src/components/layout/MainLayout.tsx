@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 export default function MainLayout() {
   return (
     <div className={cn('flex', 'flex-col', 'min-h-screen')}>
-      <Nav />
-      <main className={cn('flex-1', 'w-full', 'max-w-7xl', 'mx-auto', 'lg:px-20',)}>
+      <Nav padding="px-4 sm:px-6 md:px-10 lg:px-20" />
+      <main className={cn('flex-1', 'w-full', 'max-w-7xl', 'mx-auto', 'px-4', 'sm:px-6', 'md:px-10', 'lg:px-20')}>
         <Outlet />
       </main>
       <Footer />

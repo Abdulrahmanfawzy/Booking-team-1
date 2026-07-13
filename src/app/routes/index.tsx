@@ -1,33 +1,40 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
+import { ProtectedRoutes } from "@/components/layout/ProtectedRoutes";
 
-// Auth pages 
 import { SignInPage } from "@/features/Auth/pages/SignInPage";
 import { SignUpPage } from "@/features/Auth/pages/SignUpPage";
 import { VerifyOtpPage } from "@/features/Auth/pages/VerifyOtpPage";
-import Booking from "@/features/Booking/Booking";
+import { ForgotPasswordPage } from "@/features/Auth/pages/Forgotpasswordpage";
+import { VerifyResetOtpPage } from "@/features/Auth/pages/Verifyresetotppage";
+import { ResetPasswordPage } from "@/features/Auth/pages/Resetpasswordpage";
+import { CompleteGoogleRegistrationPage } from "@/features/Auth/pages/CompleteGoogleRegistrationPage";
 
-// Real pages — wrapped in MainLayout
 import HomePage from "@/features/Home Page/pages/HomePage";
 import AppointmentPage from "@/features/AppointmentPage/AppointmentPage.jsx";
-import ContactUs from "@/features/ContactUs/ContactUs";
 import ProfilePage from "@/features/profilepage/ProfilePage";
+import Booking from "@/features/Booking/Booking";
 import SearchDoctorsPage from "./SearchDoctors";
-
+import ContactUs from "@/features/ContactUs/ContactUs";
 
 export const authRoutes = [
   { path: "/login", element: <SignInPage /> },
   { path: "/signup", element: <SignUpPage /> },
   { path: "/verify-otp", element: <VerifyOtpPage /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/verify-reset-otp", element: <VerifyResetOtpPage /> },
+  { path: "/reset-password", element: <ResetPasswordPage /> },
+  { path: "/complete-google-registration", element: <CompleteGoogleRegistrationPage /> },
 ];
 
 const router = createBrowserRouter([
   // Root redirect
   { path: "/login", element: <Navigate to="/login" replace /> },
+  { path: "/", element: <Navigate to="/home" replace /> },
+
   ...authRoutes,
-  // ...other routes 
-  
-  {
+
+   {
     element: <MainLayout />,
     children: [
       { path: "/", element: <HomePage /> },
@@ -35,7 +42,23 @@ const router = createBrowserRouter([
       { path: "/profile", element: <ProfilePage /> },
       {path:"/booking", element:<Booking/>},
       {path:"/search", element:<SearchDoctorsPage/>},
+      { path: "/home", element: <HomePage /> },
+      { path: "/search", element: <SearchDoctorsPage /> },
       { path: "/contact-us", element: <ContactUs /> },
+    ],
+  },
+
+  {
+    element: <ProtectedRoutes />,
+    children: [
+      {
+        element: <MainLayout />,
+        children: [
+          { path: "/appointments", element: <AppointmentPage /> },
+          { path: "/profile", element: <ProfilePage /> },
+          { path: "/booking", element: <Booking /> },
+        ],
+      },
     ],
   },
 ]);
