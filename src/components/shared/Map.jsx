@@ -1,43 +1,30 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { cn } from "@/lib/utils";
 
-export default function Map({
-    center,
-    markerPosition,
-    popupContent,
-    className = "h-[400px] w-full z-1",
-}) {
-    return (
-        <MapContainer
-            center={center}
-            zoom={16}
-            scrollWheelZoom={false}
-            className={className}
-        >
-            <TileLayer
-                attribution="&copy; OpenStreetMap contributors"
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+function Map({ position, markerText }) {
+  if (!position) return <p>Loading...</p>;
 
-            <Marker position={markerPosition}>
-                <Popup>{popupContent}</Popup>
-            </Marker>
-        </MapContainer>
-    );
+  return (
+<MapContainer
+  center={position}
+  zoom={16}
+  className={cn(
+    "w-[250px]",
+    "md:w-[350px]",
+    "lg:w-[500px]",
+    "h-64",
+    "md:h-80",
+    "lg:h-[400px]",
+    "rounded-2xl"
+  )}
+>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+      <Marker position={position}>
+        <Popup>{markerText}</Popup>
+      </Marker>
+    </MapContainer>
+  );
 }
 
-
-// You can use this component like this
-
-{/* 
-
-<Map
-    center={[30.0444, 31.2357]}
-    markerPosition={[30.0444, 31.2357]}
-    popupContent={
-      <>
-        <h3 className="font-bold">Dr Ahmed</h3>
-        <p>Dentist</p>
-      </>
-  }
-/> 
-*/}
+export default Map;

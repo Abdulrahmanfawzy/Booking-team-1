@@ -1,10 +1,11 @@
 import SearchInput from './SearchInput'
 import logo from "@/assets/logo.svg"
 import NavActions from './NavActions'
-export default function Nav({padding}) {
+import { cn } from "@/lib/utils";
+export default function Nav() {
   return (
-    <header className={`${padding} sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100`}>
-      <div className="flex justify-between max-w-7xl py-2 mx-auto">
+    <header className={`sticky top-0 z-1000 bg-white/90 backdrop-blur-md border-b border-slate-100`}>
+      <div className={cn('flex', 'justify-between', 'max-w-7xl', 'py-2', 'mx-auto', 'lg:px-20', 'sm:px-10', 'px-5')}>
 
         {/* Logo */}
         <img
@@ -14,7 +15,7 @@ export default function Nav({padding}) {
         />
 
         {/* Search */}
-        <div className="w-[40%] hidden min-[420px]:block">
+        <div className={cn('w-[40%]', 'hidden', 'min-[420px]:block')}>
           <SearchInput />
         </div>
         <div>

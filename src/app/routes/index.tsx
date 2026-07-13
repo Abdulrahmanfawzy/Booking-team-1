@@ -23,14 +23,14 @@ export const authRoutes = [
 
 const router = createBrowserRouter([
   // Root redirect
-  { path: "/", element: <Navigate to="/login" replace /> },
+  { path: "/login", element: <Navigate to="/login" replace /> },
   ...authRoutes,
   // ...other routes 
   
   {
     element: <MainLayout />,
     children: [
-      { path: "/home", element: <HomePage /> },
+      { path: "/", element: <HomePage /> },
       { path: "/appointments", element: <AppointmentPage /> },
       { path: "/profile", element: <ProfilePage /> },
       {path:"/booking", element:<Booking/>},

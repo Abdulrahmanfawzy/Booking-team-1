@@ -1,5 +1,7 @@
 import { MenuIcon, X ,Bell } from "lucide-react"
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 export default function Menu() {
   const [menuClicked, setMenuClicked] = useState(false);
 
@@ -23,22 +25,22 @@ export default function Menu() {
   } items-center justify-between gap-x-2 `}
 >
   {/* Navigation Buttons */}
-  <div className="flex items-center gap-x-2">
-    <button className="px-2 text-xs md:text-md lg:text-lg font-normal text-text-dark transition hover:text-primary bg-neutral-blue p-2 rounded-md">
+  <div className={cn('flex', 'items-center', 'gap-x-2')}>
+    <Link to="/" className={cn('px-2', 'text-xs', 'md:text-sm', 'font-normal', 'text-text-dark', 'transition', 'hover:text-primary', 'bg-neutral-blue', 'p-2', 'rounded-md')}>
       Home
-    </button>
+    </Link>
 
-    <button className="px-2 text-xs md:text-md lg:text-lg font-normal text-text-dark transition hover:text-primary bg-neutral-blue p-2 rounded-md">
-      Doctor
-    </button>
+    <Link to="/booking" className={cn('px-2', 'text-xs', 'md:text-sm', 'font-normal', 'text-text-dark', 'transition', 'hover:text-primary', 'bg-neutral-blue', 'p-2', 'rounded-md')}>
+      Booking
+    </Link>
 
-    <button className="px-2 text-xs md:text-md lg:text-lg font-normal text-text-dark transition hover:text-primary bg-neutral-blue p-2 rounded-md">
-      Pharmacy
-    </button>
+    <Link to="/contact-us" className={cn('px-2', 'text-xs', 'md:text-sm', 'font-normal', 'text-text-dark', 'transition', 'hover:text-primary', 'bg-neutral-blue', 'p-2', 'rounded-md')}>
+      contact-us
+    </Link>
   </div>
 
   {/* Close Button */}
-<button onClick={() => setMenuClicked(false)} className="flex h-10 w-10 items-center justify-center self-end rounded-xl border border-gray-200 bg-neutral-blue text-text-dark transition hover:bg-gray-100 sm:self-auto" > <X size={20} strokeWidth={1.5} /> </button>
+<button onClick={() => setMenuClicked(false)} className={cn('flex', 'h-10', 'w-10', 'items-center', 'justify-center', 'self-end', 'rounded-xl', 'border', 'border-gray-200', 'bg-neutral-blue', 'text-text-dark', 'transition', 'hover:bg-gray-100', 'sm:self-auto')} > <X size={20} strokeWidth={1.5} /> </button>
 </div>
     </div>
   );

@@ -1,0 +1,10 @@
+ src/app/routes/index.tsx                        |   4 [32m+[m[31m-[m
+ src/components/layout/MainLayout.tsx            |  12 [32m+[m[31m-[m
+ src/components/shared/Map.jsx                   |  63 [32m++[m[31m--[m
+ src/components/shared/nav/Menu.tsx              |  22 [32m+[m[31m-[m
+ src/components/shared/nav/Nav.tsx               |   9 [32m+[m[31m-[m
+ src/features/Home Page/sections/DownloadApp.tsx |  77 [32m++[m[31m---[m
+ src/features/Home Page/sections/FAQ.tsx         |  91 [32m+++[m[31m---[m
+ src/features/Home Page/sections/FindCare.tsx    | 238 [32m+++++[m[31m----------[m
+ yarn.lock                                       | 372 [32m+++++[m[31m-------------------[m
+ 9 files changed, 302 insertions(+), 586 deletions(-)
