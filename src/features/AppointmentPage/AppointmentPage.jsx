@@ -32,17 +32,13 @@ export default function AppointmentPage() {
           <Rating />
         </div>
 
-        {/* Doctor */}
+        {/* second column */}
         <div>
           <DoctorProfile doctor={doctor} />
         </div>
       </div>
 
    
-    
-
-      {/* Payment Modal */}
-      {/* <PaymentModal /> */}
     </>
   );
 }
