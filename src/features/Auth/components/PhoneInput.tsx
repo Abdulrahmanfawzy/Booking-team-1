@@ -41,7 +41,7 @@ export function PhoneInput({
     <div
       ref={containerRef}
       className={cn(
-        "relative flex h-14 w-full items-center gap-3 rounded-[12px] border pl-4 pr-6 transition-all focus-within:border-[#145DB8]",
+        "relative flex h-11 w-full items-center gap-3 rounded-[12px] border pl-4 pr-6 transition-all focus-within:border-[#145DB8]",
         error ? "border-red-500" : "border-[#99A2AB]/40",
       )}
     >
