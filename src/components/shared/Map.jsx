@@ -1,5 +1,45 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
+
+function ChangeMapView({ center }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (center) {
+      map.setView(center, map.getZoom());
+    }
+  }, [center, map]);
+
+  return null;
+}
+
+export function DoctorMap({
+  center,
+  markerPosition,
+  popupContent,
+  className = "h-[400px] w-full z-10 rounded-xl",
+}) {
+  return (
+    <MapContainer
+      center={center}
+      zoom={16}
+      scrollWheelZoom={false}
+      className={className}
+    >
+      <ChangeMapView center={center} />
+
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      <Marker position={markerPosition}>
+        <Popup>{popupContent}</Popup>
+      </Marker>
+    </MapContainer>
+  );
+}
 
 function Map({ position, markerText, doctors = [] }) {
   console.log("Doctors:", doctors);
@@ -18,10 +58,15 @@ function Map({ position, markerText, doctors = [] }) {
         "h-64",
         "md:h-80",
         "lg:h-[400px]",
-        "rounded-2xl"
+        "rounded-2xl z-10"
       )}
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <ChangeMapView center={position} />
+
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
       {/* موقع المستخدم */}
       <Marker position={position}>

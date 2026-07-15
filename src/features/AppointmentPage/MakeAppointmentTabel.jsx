@@ -1,49 +1,34 @@
 import { ArrowLeft, CalendarDays } from "lucide-react";
-import { useRef, useState } from "react";
-import Day from "./components/Day";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import Hour from "./components/Hour";
 import PaymentModal from "./components/PaymentModal";
 
-export default function MakeAppointmentTabel({doctor}) {
-  const dateInput = useRef(null);
-
-  const [activeDay, setActiveDay] = useState(null);
+export default function MakeAppointmentTabel({ doctor }) {
   const [activeHour, setActiveHour] = useState(null);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
-  // open and close payment modal
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [bookingError, setBookingError] = useState("");
 
-  // The calender data
-  const [selectedMonth, setSelectedMonth] = useState("");
-  // To show the name of the month
-  const monthName = selectedMonth
-    ? new Date(`${selectedMonth}-01`).toLocaleString("en-US", {
-      month: "long",
-    })
+  const availableSlots = doctor.available_slots || {};
+
+  const hasAvailableDates = Object.keys(availableSlots).length > 0;
+
+  const formattedDate = selectedDate
+    ? selectedDate.toISOString().split("T")[0]
     : "";
 
-  const freeDays = [
-    // To be deleted
-    ["Fri", 12],
-    ["Sat", 13],
-    ["Sun", 14],
-    ["Mon", 15],
-    ["Tue", 16],
-    ["Wed", 17],
-    ["Thu", 18],
-  ];
+  const freeHours = formattedDate
+    ? availableSlots[formattedDate] || []
+    : [];
 
-  const freeHours = [
-    // To be deleted
-    "9:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:30 AM",
-    "5:30 PM",
-    "7:00 PM",
-    "9:00 PM",
-    "10:00 PM",
-  ];
+  const filterDate = (date) => {
+    const current = date.toISOString().split("T")[0];
+    return Object.keys(availableSlots).includes(current);
+  };
 
   return (
     <>
@@ -56,79 +41,109 @@ export default function MakeAppointmentTabel({doctor}) {
         <header className="flex justify-between items-center pb-4 border-b-[1.5px] border-gray-border">
           <p className="text-gray">Choose date and time</p>
 
-          <div className="flex gap-2">
-            <CalendarDays
-              className="cursor-pointer"
-              onClick={() => dateInput.current.showPicker()}
-            />
+          {hasAvailableDates ? (
+            <div className="flex items-center gap-2">
+              <CalendarDays className="text-main-blue" />
 
-            <input
-              ref={dateInput}
-              type="month"
-              min={new Date().toISOString().slice(0, 7)}
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-              className="focus:outline-none [&::-webkit-calendar-picker-indicator]:hidden"
-            />
-          </div>
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => {
+                  setSelectedDate(date);
+                  setActiveHour(null);
+                  setBookingError("");
+                }}
+                filterDate={filterDate}
+                minDate={new Date()}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="Select date"
+                className="border rounded px-2 py-1 outline-none"
+              />
+            </div>
+          ) : (
+            <p className="text-sm text-red-500 font-medium">
+              No available appointments available.
+            </p>
+          )}
         </header>
 
-        {/* Days */}
-        <div className="flex justify-between flex-wrap py-5">
-          {freeDays.map((day, index) => (
-            <Day
-              key={index}
-              day={day[0]}
-              date={day[1]}
-              isActive={activeDay === index}
-              onClick={() => setActiveDay(index)}
-            />
-          ))}
-        </div>
-
         {/* Hours */}
-        <div className="flex flex-wrap gap-4">
-          {freeHours.map((hour, index) => (
-            <Hour
-              key={index}
-              hour={hour}
-              isActive={activeHour === index}
-              onClick={() => setActiveHour(index)}
-            />
-          ))}
-        </div>
-        {/* Selected date and booking */}
-        <div className="flex items-center py-3 justify-between">
-          <div className="flex items-center gap-2">
-            {activeDay !== null && activeHour !== null && (
-              <>
-                <CalendarDays className="text-main-blue" />
-                <span>
-                  {`${freeDays[activeDay][0]}, ${monthName} ${freeDays[activeDay][1]} - ${freeHours[activeHour]}`}
-                </span>
-              </>
+        {hasAvailableDates && (
+          <div className="flex flex-wrap gap-4">
+            {freeHours.length > 0 ? (
+              freeHours.map((hour, index) => (
+                <Hour
+                  key={hour}
+                  hour={hour}
+                  isActive={activeHour === index}
+                  onClick={() => {
+                    setActiveHour(index);
+                    setBookingError("");
+                  }}
+                />
+              ))
+            ) : (
+              selectedDate && (
+                <p className="text-gray-500">
+                  No available times for this date.
+                </p>
+              )
             )}
           </div>
+        )}
 
-          <button className="px-10 py-3 border-[1.5px] border-main-blue rounded-sm bg-white text-main-blue font-medium transition-colors hover:bg-main-blue hover:text-white active:scale-95"
-            onClick={() => { setIsPaymentOpen(true) }}
-          >
-            Book
-          </button>
-        </div>
+        {/* Selected appointment */}
+        {hasAvailableDates && (
+          <div className="flex items-center py-3 justify-between">
+            <div>
+              {selectedDate && activeHour !== null && (
+                <span>
+                  {formattedDate} - {freeHours[activeHour]}
+                </span>
+              )}
+            </div>
+
+            <button
+              className="px-10 py-3 border-[1.5px] border-main-blue rounded-sm bg-white text-main-blue font-medium transition-colors hover:bg-main-blue hover:text-white active:scale-95"
+              onClick={() => {
+                if (!selectedDate) {
+                  setBookingError("Please select a date.");
+                  return;
+                }
+
+                if (activeHour === null) {
+                  setBookingError("Please select a time.");
+                  return;
+                }
+
+                setBookingError("");
+                setIsPaymentOpen(true);
+              }}
+            >
+              Book
+            </button>
+          </div>
+        )}
+
+        {bookingError && (
+          <p className="text-sm text-red-500">{bookingError}</p>
+        )}
       </div>
-      {/* Payment Modal */}
-        <PaymentModal
-          isOpen={isPaymentOpen}
-          onClose={() => setIsPaymentOpen(false)}
-          doctor={doctor}
-          appointment={
-            activeDay !== null && activeHour !== null
-              ? `${freeDays[activeDay][0]}, ${monthName} ${freeDays[activeDay][1]} - ${freeHours[activeHour]}`
-              : ""
-          }
-          price={350}
-        />
+
+      <PaymentModal
+        isOpen={isPaymentOpen}
+        onClose={() => setIsPaymentOpen(false)}
+        doctor={doctor}
+        appointment={
+          selectedDate && activeHour !== null
+            ? `${formattedDate} - ${freeHours[activeHour]}`
+            : ""
+        }
+        appointmentDate={formattedDate}
+        appointmentTime={
+          activeHour !== null ? freeHours[activeHour] : ""
+        }
+        price={doctor.consultation_price}
+      />
     </>
   );
 }

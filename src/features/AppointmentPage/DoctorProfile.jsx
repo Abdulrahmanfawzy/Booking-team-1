@@ -2,34 +2,35 @@ import { Heart, MessageCircleMore } from "lucide-react";
 import { BsFillPeopleFill, BsAwardFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import { TbMessagesFilled } from "react-icons/tb";
-import StatCard from "./components/StatCard";
 import { useState } from "react";
-import PaymentModal from "./components/PaymentModal";
-import Map from "../../components/shared/Map";
+
+import StatCard from "./components/StatCard";
+import { DoctorMap } from "../../components/shared/Map";
 
 export default function DoctorProfile({ doctor }) {
-
   const [expanded, setExpanded] = useState(false);
+  const MAX_LENGTH = 85;
+  const isLongText = doctor.about.length > MAX_LENGTH;
 
   const stats = [
     {
       Icon: BsFillPeopleFill,
-      value: doctor.stats.patients,
+      value: "--",
       label: "patients",
     },
     {
       Icon: BsAwardFill,
-      value: doctor.stats.experience,
+      value: `${doctor.experience_years}+`,
       label: "experience",
     },
     {
       Icon: FaStar,
-      value: doctor.stats.rating,
+      value: doctor.rating.average,
       label: "rating",
     },
     {
       Icon: TbMessagesFilled,
-      value: doctor.stats.reviews,
+      value: doctor.rating.count,
       label: "reviews",
     },
   ];
@@ -48,7 +49,7 @@ export default function DoctorProfile({ doctor }) {
           />
 
           <p className="font-semibold">{doctor.name}</p>
-          <p className="text-gray">{doctor.specialty}</p>
+          <p className="text-gray">{doctor.specialty.name}</p>
         </div>
 
         <MessageCircleMore className="cursor-pointer" />
@@ -66,31 +67,44 @@ export default function DoctorProfile({ doctor }) {
         ))}
       </div>
 
-      {/* About me section */}
+      {/* About me */}
       <div>
         <h2 className="text-xl">About me</h2>
 
         <p className="text-gray text-sm">
-          {expanded
-            ? doctor.about
-            : `${doctor.about.slice(0, 85)}... `}
+          {isLongText ? (
+            <>
+              {expanded
+                ? doctor.about
+                : `${doctor.about.slice(0, MAX_LENGTH)}... `}
 
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="text-main-blue font-medium hover:underline"
-          >
-            {expanded ? "Read less" : "Read more"}
-          </button>
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="text-main-blue font-medium hover:underline"
+              >
+                {expanded ? "Read less" : "Read more"}
+              </button>
+            </>
+          ) : (
+            doctor.about
+          )}
         </p>
       </div>
-
       {/* Location */}
-      <Map
-        center={[30.0444, 31.2357]}
-        markerPosition={[30.0444, 31.2357]}
+      <DoctorMap
+        center={[
+          doctor.location.latitude,
+          doctor.location.longitude,
+        ]}
+        markerPosition={[
+          doctor.location.latitude,
+          doctor.location.longitude,
+        ]}
         popupContent={
           <>
-            <h3 className="font-bold">Dr Ahmed <br />Dentist</h3>
+            <h3 className="font-bold">{doctor.name}</h3>
+            <p>{doctor.specialty.name}</p>
+            <p>{doctor.location.address}</p>
           </>
         }
       />
