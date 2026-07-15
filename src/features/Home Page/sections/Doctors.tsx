@@ -1,78 +1,64 @@
 import { useRef } from "react";
 import { Star, Clock, ArrowLeft, ArrowRight } from "lucide-react";
-import DoctorImage from "@/assets/Rectangle 1673.svg"
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface Doctor {
+  id: number;
   name: string;
   specialty: string;
   hospital: string;
   rating: number;
-  hours: string;
-  pricePerHour: number;
-  image: string;
+  consultation_price: number;
+  image: string | null;
 }
 
-// Single source of truth for the card data — every card on the slider maps from this.
-const doctorData: Doctor = {
-  name: "Robert Johnson",
-  specialty: "Orthopedic",
-  hospital: "El-Nasr Hospital",
-  rating: 4.8,
-  hours: "9:30am - 8:00pm",
-  pricePerHour: 350,
-  image: DoctorImage,
-};
-
-// How many times to repeat the card on the slider. Swap this for a real
-// `doctors: Doctor[]` array once you have live data — the map stays the same.
-const SLIDE_COUNT = 8;
-const slides = Array.from({ length: SLIDE_COUNT }, (_, i) => ({
-  ...doctorData,
-  id: `doctor-${i}`,
-}));
+interface Props {
+  doctors: Doctor[];
+}
 
 function DoctorCard({ doctor }: { doctor: Doctor }) {
   return (
-    <div className="min-w-[330px] max-w-[230px] shrink-0 snap-start rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+    <div className={cn('min-w-[330px]', 'max-w-[230px]', 'shrink-0', 'snap-start', 'rounded-2xl', 'border', 'border-gray-200', 'bg-white', 'p-4', 'shadow-sm', 'transition-shadow', 'hover:shadow-md')}>
       {/* Doctor info row */}
-      <div className="flex items-center gap-3">
+      <div className={cn('flex', 'items-center', 'gap-3')}>
         <img
-          src={doctor.image}
+          src={`${import.meta.env.VITE_API_URL}/${doctor.image}`}
           alt={doctor.name}
-          className="h-20 w-20 shrink-0 rounded-xl object-cover"
+          className={cn('h-20', 'w-20', 'shrink-0', 'rounded-xl', 'object-cover')}
         />
-        <div className="min-w-0 text-left">
-          <p className="truncate font-semibold text-gray-900">{doctor.name}</p>
-          <p className="truncate text-sm text-gray-500">
+        <div className={cn('min-w-0', 'text-left')}>
+          <p className={cn('truncate', 'font-semibold', 'text-gray-900')}>{doctor.name}</p>
+          <p className={cn('truncate', 'text-sm', 'text-gray-500')}>
             {doctor.specialty} | {doctor.hospital}
           </p>
 
           {/* Rating & hours */}
-          <div className="mt-2 flex items-center gap-3 text-sm text-gray-500">
-            <span className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-              <span className="font-medium text-gray-800">{doctor.rating}</span>
+          <div className={cn('mt-2', 'flex', 'items-center', 'gap-3', 'text-sm', 'text-gray-500')}>
+            <span className={cn('flex', 'items-center', 'gap-1')}>
+              <Star className={cn('h-4', 'w-4', 'fill-amber-400', 'text-amber-400')} />
+              <span className={cn('font-medium', 'text-gray-800')}>{doctor.rating}</span>
             </span>
-            <span className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              {doctor.hours}
+            <span className={cn('flex', 'items-center', 'gap-1')}>
+              <Clock className={cn('h-4', 'w-4')} />
+              Available Today
             </span>
           </div>
         </div>
       </div>
 
       {/* Price row */}
-      <div className="mt-3 flex items-baseline justify-between">
-        <span className="text-sm text-gray-500">Price/hour</span>
-        <span className="text-base font-semibold text-red-500">
-          ${doctor.pricePerHour}
+      <div className={cn('mt-3', 'flex', 'items-baseline', 'justify-between')}>
+        <span className={cn('text-sm', 'text-gray-500')}>Price/hour</span>
+        <span className={cn('text-base', 'font-semibold', 'text-red-500')}>
+          ${doctor.consultation_price}
         </span>
       </div>
 
       {/* CTA button */}
       <button
         type="button"
-        className="mt-3 w-full rounded-lg bg-blue-800 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-2"
+        className={cn('mt-3', 'w-full', 'rounded-lg', 'bg-blue-800', 'py-2.5', 'text-sm', 'font-medium', 'text-white', 'transition-colors', 'hover:bg-blue-900', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-800', 'focus-visible:ring-offset-2')}
       >
         Book appointment
       </button>
@@ -80,7 +66,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
   );
 }
 
-export default function TopRatedDoctors() {
+export default function TopRatedDoctors({ doctors = [] }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
 
   const scrollByCard = (direction: "prev" | "next") => {
@@ -95,44 +81,43 @@ export default function TopRatedDoctors() {
   };
 
   return (
-    <section className="mx-auto max-w-full px-4 py-12">
+    <section className={cn('mx-auto', 'max-w-full', 'px-4', 'py-12')}>
       {/* Header row */}
-      <div className="flex flex-wrap items-start justify-between text-left ml-2">
+      <div className={cn('flex', 'flex-wrap', 'items-start', 'justify-between', 'text-left', 'ml-2')}>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h2 className={cn('text-2xl', 'font-bold', 'text-gray-900', 'md:text-3xl')}>
             Top-Rated Doctors Chosen by Patients
           </h2>
-          <p className="mt-2 max-w-2xl text-sm text-gray-500 md:text-base text-left ml-2 mb-6">
+          <p className={cn('mt-2', 'max-w-2xl', 'text-sm', 'text-gray-500', 'md:text-base', 'text-left', 'ml-2', 'mb-6')}>
             Explore our highest-rated doctors, trusted by real patients for
             their expertise, care, and service. Book with confidence today.
           </p>
         </div>
 
         {/* Controls */}
-        <div className="flex shrink-0 items-center gap-2 items-right lg:mr-10">
-          <button
-            type="button"
-            className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-blue-800 transition-colors hover:bg-blue-50"
+        <div className={cn('flex', 'shrink-0', 'items-center', 'gap-2', 'items-right', 'lg:mr-10')}>
+          <Link to={'/search'}
+            className={cn('rounded-lg', 'border', 'border-gray-200', 'px-4', 'py-2', 'text-sm', 'font-medium', 'text-blue-800', 'transition-colors', 'hover:bg-blue-50')}
           >
             View All
-          </button>
+          </Link>
 
           <button
             type="button"
             onClick={() => scrollByCard("prev")}
             aria-label="Previous doctors"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:bg-gray-100"
+            className={cn('flex', 'h-9', 'w-9', 'items-center', 'justify-center', 'rounded-full', 'border', 'border-gray-200', 'text-gray-700', 'transition-colors', 'hover:bg-gray-100')}
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className={cn('h-4', 'w-4')} />
           </button>
 
           <button
             type="button"
             onClick={() => scrollByCard("next")}
             aria-label="Next doctors"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:bg-gray-100"
+            className={cn('flex', 'h-9', 'w-9', 'items-center', 'justify-center', 'rounded-full', 'border', 'border-gray-200', 'text-gray-700', 'transition-colors', 'hover:bg-gray-100')}
           >
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className={cn('h-4', 'w-4')} />
           </button>
         </div>
       </div>
@@ -140,9 +125,9 @@ export default function TopRatedDoctors() {
       {/* Slider track */}
       <div
         ref={trackRef}
-        className="mt-6 flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className={cn('mt-6', 'flex', 'gap-4', 'overflow-x-auto', 'pb-2', 'snap-x', 'snap-mandatory', '[scrollbar-width:none]', '[-ms-overflow-style:none]', '[&::-webkit-scrollbar]:hidden')}
       >
-        {slides.map((doctor) => (
+        {doctors.map((doctor) => (
           <div key={doctor.id} data-card>
             <DoctorCard doctor={doctor} />
           </div>
