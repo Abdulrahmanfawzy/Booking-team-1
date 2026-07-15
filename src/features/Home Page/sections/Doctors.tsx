@@ -23,7 +23,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
       {/* Doctor info row */}
       <div className={cn('flex', 'items-center', 'gap-3')}>
         <img
-          src={`${import.meta.env.VITE_API_URL}/${doctor.image}`}
+          src={`${doctor.image}`}
           alt={doctor.name}
           className={cn('h-20', 'w-20', 'shrink-0', 'rounded-xl', 'object-cover')}
         />
