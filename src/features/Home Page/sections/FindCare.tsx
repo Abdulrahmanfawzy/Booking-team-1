@@ -102,7 +102,7 @@ export default function FindCare({ position, nearbyDoctors = [] }: Props) {
         </div>
       </div>
 
-      <div className={cn("w-full", "lg:w-1/2", "flex", "justify-center", "items-center" ,'z-[-1]')}>
+      <div className={cn("w-full", "lg:w-1/2", "flex", "justify-center", "items-center" ,'')}>
         {position && (
           <Map
             position={position}
