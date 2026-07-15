@@ -41,8 +41,6 @@ export function DoctorMap({
   );
 }
 
-
-
 function Map({ position, markerText, doctors = [] }) {
   console.log("Doctors:", doctors);
 
@@ -60,15 +58,17 @@ function Map({ position, markerText, doctors = [] }) {
         "h-64",
         "md:h-80",
         "lg:h-[400px]",
-        "rounded-2xl z-10"
+        "rounded-2xl z-10" // أضفنا الـ z-10 لضمان ظهور العناصر بشكل صحيح
       )}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
+      {/* موقع المستخدم */}
       <Marker position={position}>
         <Popup>{markerText}</Popup>
       </Marker>
 
+      {/* الدكاترة */}
       {doctors.map((doctor) => (
         <Marker
           key={doctor.id}
