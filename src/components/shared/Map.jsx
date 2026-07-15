@@ -1,43 +1,39 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect } from "react";
 
-export default function Map({
-    center,
-    markerPosition,
-    popupContent,
-    className = "h-[400px] w-full z-1",
-}) {
-    return (
-        <MapContainer
-            center={center}
-            zoom={16}
-            scrollWheelZoom={false}
-            className={className}
-        >
-            <TileLayer
-                attribution="&copy; OpenStreetMap contributors"
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+function ChangeMapView({ center }) {
+  const map = useMap();
 
-            <Marker position={markerPosition}>
-                <Popup>{popupContent}</Popup>
-            </Marker>
-        </MapContainer>
-    );
+  useEffect(() => {
+    map.setView(center, map.getZoom());
+  }, [center, map]);
+
+  return null;
 }
 
+export default function Map({
+  center,
+  markerPosition,
+  popupContent,
+  className = "h-[400px] w-full z-10 rounded-xl",
+}) {
+  return (
+    <MapContainer
+      center={center}
+      zoom={16}
+      scrollWheelZoom={false}
+      className={className}
+    >
+      <ChangeMapView center={center} />
 
-// You can use this component like this
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
-{/* 
-
-<Map
-    center={[30.0444, 31.2357]}
-    markerPosition={[30.0444, 31.2357]}
-    popupContent={
-      <>
-        <h3 className="font-bold">Dr Ahmed</h3>
-        <p>Dentist</p>
-      </>
-  }
-/> 
-*/}
+      <Marker position={markerPosition}>
+        <Popup>{popupContent}</Popup>
+      </Marker>
+    </MapContainer>
+  );
+}
