@@ -68,10 +68,12 @@ function Map({ position, markerText, doctors = [] }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
+      {/* موقع المستخدم */}
       <Marker position={position}>
         <Popup>{markerText}</Popup>
       </Marker>
 
+      {/* الدكاترة */}
       {doctors.map((doctor) => (
         <Marker
           key={doctor.id}
