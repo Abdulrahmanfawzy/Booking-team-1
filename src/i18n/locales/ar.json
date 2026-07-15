@@ -6,17 +6,54 @@
   "auth": {
     "login": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
-    "validation": {
-      "countryCodeRequired": "برجاء اختيار كود الدولة",
-      "phoneRequired": "رقم الهاتف مطلوب",
-      "invalidPhone": "برجاء إدخال رقم هاتف صحيح (من 7 إلى 15 رقم)",
-      "nameRequired": "الاسم بالكامل مطلوب",
-      "nameTooShort": "يجب أن يكون الاسم حرفين على الأقل",
-      "emailRequired": "البريد الإلكتروني مطلوب",
-      "invalidEmail": "برجاء إدخال بريد إلكتروني صحيح",
-      "otpRequired": "كود التحقق مطلوب",
-      "otpLength": "يجب أن يتكون كود التحقق من 4 أرقام"
-    }
+    "forgotPassword": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle": "أدخل رقم هاتفك لإعادة تعيين كلمة المرور الخاصة بك",
+      "phonePlaceholder": "أدخل رقم الهاتف",
+      "submit": "إرسال كود التحقق",
+      "submitting": "جارٍ الإرسال...",
+      "backToSignIn": "العودة لتسجيل الدخول"
+    },
+    "verifyOtp": {
+      "title": "التحقق من كود الـ OTP",
+      "subtitle": "أدخل كود التحقق المكون من 4 أرقام المرسل إلى هاتفك",
+      "missingPhone": "رقم الهاتف مفقود. يرجى المحاولة مرة أخرى.",
+      "checkPhone": "تم إرسال الكود إلى",
+      "resend": "إعادة إرسال الكود",
+      "or": "أو",
+      "enterAnotherPhone": "إدخال رقم هاتف آخر",
+      "resendIn": "إعادة الإرسال خلال {{seconds}} ثانية",
+      "submit": "تحقق",
+      "submitting": "جارٍ التحقق..."
+    },
+    "resetPassword": {
+      "title": "تعيين كلمة المرور",
+      "subtitle": "أنشئ كلمة مرور جديدة وقوية لحسابك",
+      "submit": "تحديث كلمة المرور",
+      "submitting": "جارٍ التحديث...",
+      "success": "تم إعادة تعيين كلمة المرور بنجاح!"
+    },
+    "signUp": {
+      "passwordLabel": "كلمة المرور الجديدة",
+      "passwordPlaceholder": "أدخل كلمة المرور الجديدة",
+      "passwordConfirmationLabel": "تأكيد كلمة المرور",
+      "passwordConfirmationPlaceholder": "أعد كتابة كلمة المرور"
+    },
+   "validation": {
+  "nameRequired": "برجاء كتابة الاسم بالكامل",
+  "nameMustBeDouble": "يجب كتابة الاسم ثنائي على الأقل (مثال: أحمد محمد)",
+  "emailRequired": "البريد الإلكتروني مطلوب",
+  "invalidEmail": "صيغة البريد الإلكتروني غير صحيحة (مثال: name@example.com)",
+  "phoneRequired": "رقم الهاتف مطلوب",
+  "invalidPhone": "رقم الهاتف غير صحيح، يجب أن يكون بين 7 إلى 15 رقماً بدون رموز",
+  "passwordMinLength": "كلمة المرور قصيرة جداً، يجب ألا تقل عن 8 أحرف",
+  "passwordNeedUppercase": "كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل (A-Z)",
+  "passwordNeedNumber": "كلمة المرور يجب أن تحتوي على رقم واحد على الأقل (0-9)",
+  "passwordNeedSpecial": "كلمة المرور يجب أن تحتوي على رمز خاص واحد على الأقل (مثل @، $، !)",
+  "confirmRequired": "برجاء تأكيد كلمة المرور",
+  "passwordsDontMatch": "كلمة المرور وتأكيدها غير متطابقين",
+  "phoneAlreadyExists": "عذراً، رقم الهاتف هذا مسجل به حساب بالفعل"
+}
   },
   "dashboard": {
     "title": "لوحة التحكم",
