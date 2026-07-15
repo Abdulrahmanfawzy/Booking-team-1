@@ -58,10 +58,15 @@ function Map({ position, markerText, doctors = [] }) {
         "h-64",
         "md:h-80",
         "lg:h-[400px]",
-        "rounded-2xl z-10" 
+        "rounded-2xl z-10"
       )}
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <ChangeMapView center={position} />
+
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
       <Marker position={position}>
         <Popup>{markerText}</Popup>
