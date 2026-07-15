@@ -8,22 +8,27 @@ import RatingModal from "./components/RatingModal";
 export default function Rating({ doctor }) {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
 
+  const bookingId = doctor.booking_id;
+
   return (
     <>
       <div className="flex flex-col gap-7 mt-5">
         <header className="flex justify-between items-center">
-          <h3 className="text-black font-medium">Reviews and Ratings</h3>
+          <h3 className="text-black font-medium">
+            Reviews and Ratings
+          </h3>
 
-          <div
-            className="flex items-center gap-2 text-main-blue cursor-pointer"
-            onClick={() => setIsRatingModalOpen(true)}
-          >
-            <Pencil />
-            <p>Add review</p>
-          </div>
+          {bookingId && (
+            <div
+              className="flex items-center gap-2 text-main-blue cursor-pointer"
+              onClick={() => setIsRatingModalOpen(true)}
+            >
+              <Pencil />
+              <p>Add review</p>
+            </div>
+          )}
         </header>
 
-        {/* Rating Summary */}
         <div className="flex justify-between items-center">
           <h1 className="text-3xl text-black font-medium">
             {doctor.rating.average}/5
@@ -37,7 +42,6 @@ export default function Rating({ doctor }) {
           </div>
         </div>
 
-        {/* Reviews */}
         <div className="grid grid-cols-2 gap-4">
           {doctor.reviews.map((review) => (
             <HumanRatingCard
@@ -55,7 +59,11 @@ export default function Rating({ doctor }) {
       </div>
 
       {isRatingModalOpen && (
-        <RatingModal closeModal={setIsRatingModalOpen} />
+        <RatingModal
+          closeModal={setIsRatingModalOpen}
+          doctorId={doctor.id}
+          bookingId={bookingId}
+        />
       )}
     </>
   );
