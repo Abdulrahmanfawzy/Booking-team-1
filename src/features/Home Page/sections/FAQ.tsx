@@ -1,5 +1,11 @@
-import { Star, Plus } from "lucide-react";
-import * as Accordion from "@radix-ui/react-accordion";
+import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const REVIEW_AVATARS = [11, 22, 5, 15, 8];
 
@@ -24,31 +30,31 @@ const FAQ_ITEMS = [
 
 function Reviews() {
   return (
-    <div className="mx-auto flex max-w-lg flex-col items-center text-center">
-      <h2 className="font-serif text-3xl leading-tight text-slate-900">
+    <div className={cn('mx-auto', 'flex', 'max-w-lg', 'flex-col', 'items-center', 'text-center')}>
+      <h2 className={cn('font-serif', 'text-3xl', 'leading-tight', 'text-slate-900')}>
         Reviews
         <br />
         That Speak for Themselves
       </h2>
 
-      <div className="mt-5 flex gap-1 text-amber-400">
+      <div className={cn('mt-5', 'flex', 'gap-1', 'text-amber-400')}>
         {Array.from({ length: 5 }).map((_, i) => (
           <Star key={i} size={18} className="fill-amber-400" />
         ))}
       </div>
 
-      <p className="mt-4 text-sm leading-relaxed text-slate-500">
+      <p className={cn('mt-4', 'text-sm', 'leading-relaxed', 'text-slate-500')}>
         "Quick and easy booking! I found a great dermatologist near me and
         booked an appointment in just a few minutes."
       </p>
 
-      <div className="mt-6 flex -space-x-3">
+      <div className={cn('mt-6', 'flex', '-space-x-3')}>
         {REVIEW_AVATARS.map((n) => (
           <img
             key={n}
             src={`https://i.pravatar.cc/80?img=${n}`}
-            alt=""
-            className="h-11 w-11 rounded-full object-cover ring-2 ring-white"
+            alt="Reviewer"
+            className={cn('h-11', 'w-11', 'rounded-full', 'object-cover', 'ring-2', 'ring-white')}
           />
         ))}
       </div>
@@ -58,49 +64,66 @@ function Reviews() {
 
 function FAQAccordion() {
   return (
-    <div className="mx-auto mt-16 max-w-2xl">
-      <div className="flex justify-center">
-        <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600">
+    <div className={cn('mx-auto', 'mt-16', 'max-w-2xl')}>
+      <div className={cn('flex', 'justify-center')}>
+        <span className={cn('rounded-full', 'bg-blue-50', 'px-3', 'py-1', 'text-xs', 'font-medium', 'text-blue-600')}>
           Frequently Asked Questions
         </span>
       </div>
-      <h3 className="mt-3 text-center font-serif text-2xl text-slate-900">
+
+      <h3 className={cn('mt-3', 'text-center', 'font-serif', 'text-2xl', 'text-slate-900')}>
         Got Questions? We've got Answers!
       </h3>
 
-      <Accordion.Root
+      <Accordion
         type="single"
         collapsible
-        className="mt-8 flex flex-col gap-2.5"
+        className={cn(
+          "mt-8",
+          "space-y-3",
+          "w-full",
+          "max-w-2xl",
+          "mx-auto"
+          )}
       >
-        {FAQ_ITEMS.map((item, i) => (
-          <Accordion.Item
+        {FAQ_ITEMS.map((item, index) => (
+          <AccordionItem
             key={item.q}
-            value={`item-${i}`}
-            className="overflow-hidden rounded-xl bg-slate-50"
+            value={`item-${index}`}
+            className={cn(
+              "w-full",
+              "rounded-xl",
+              "border",
+              "border-slate-200",
+              "bg-slate-50",
+              "px-5"
+            )}
           >
-            <Accordion.Header>
-              <Accordion.Trigger className="group flex w-full items-center justify-between px-4 py-3.5 text-left text-sm font-medium text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
-                {item.q}
-                <Plus
-                  size={16}
-                  className="shrink-0 text-slate-500 transition-transform duration-200 group-data-[state=open]:rotate-45"
-                />
-              </Accordion.Trigger>
-            </Accordion.Header>
-            <Accordion.Content className="overflow-hidden px-4 text-sm leading-relaxed text-slate-500 data-[state=open]:pb-4">
+            <AccordionTrigger
+              className={cn(
+              "w-full",
+              "text-left",
+              "font-medium",
+              "text-slate-900",
+              "hover:no-underline"
+              )}
+            >
+              {item.q}
+            </AccordionTrigger>
+
+            <AccordionContent className={cn('pb-4', 'text-sm', 'leading-relaxed', 'text-slate-500')}>
               {item.a}
-            </Accordion.Content>
-          </Accordion.Item>
+            </AccordionContent>
+          </AccordionItem>
         ))}
-      </Accordion.Root>
+      </Accordion>
     </div>
   );
 }
 
 export default function FAQ() {
   return (
-    <section className="px-4 pb-24 sm:px-6 lg:px-10">
+    <section className={cn('w-full', 'px-4', 'pb-24', 'sm:px-6', 'lg:px-10')}>
       <Reviews />
       <FAQAccordion />
     </section>

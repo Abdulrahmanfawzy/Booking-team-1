@@ -6,6 +6,7 @@ import { OtpInput } from "../components/OtpInput";
 import { Button } from "@/components/ui/button";
 import { useVerifyOtp, useResendOtp } from "../hooks/useAuthMutations";
 import { useCountdown } from "../hooks/useCountdown";
+import { getApiErrorMessage } from "@/services/axiosInstance";
 
 const RESEND_SECONDS = 60;
 
@@ -16,116 +17,111 @@ export function VerifyOtpPage() {
   const phone = (location.state as { phone?: string } | null)?.phone;
 
   const [otp, setOtp] = useState("");
-  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOtp();
   const { mutate: resendOtp, isPending: isResending } = useResendOtp();
   const { secondsLeft, isFinished, restart } = useCountdown(RESEND_SECONDS);
 
+  // Shouldn't normally happen (means someone landed here directly), but
+  // guard against a missing phone rather than crashing on API calls.
+  if (!phone) {
+    return (
+      <AuthLayout title={t("auth.verifyOtp.title")} subtitle={t("auth.verifyOtp.subtitle")}>
+        <div className="flex flex-col items-center gap-4 text-center">
+          <p className="font-montserrat text-sm text-red-500">
+            {t("auth.verifyOtp.missingPhone")}
+          </p>
+          <Button 
+           className="w-full h-[48px] bg-[#145DB8] hover:bg-[#104b94] text-white rounded-[8px] text-base font-medium transition-colors"
+          onClick={() => navigate("/signup")}>{t("auth.signUp.title")}</Button>
+        </div>
+      </AuthLayout>
+    );
+  }
+
   const handleChange = (value: string) => {
     setOtp(value);
-    if (hasError) setHasError(false);
+    if (errorMessage) setErrorMessage(null);
   };
 
   const handleVerify = () => {
     if (otp.length < 4) return;
     verifyOtp(
-      { otp },
+      { phone, values: { otp } },
       {
         onSuccess: () => {
-          navigate("/", { replace: true });
+          // Verifying the phone doesn't log the user in (no token in this
+          // response) — send them to sign in next.
+          navigate("/login", { replace: true });
         },
-        onError: () => {
-          setHasError(true);
+        onError: (error) => {
+          setErrorMessage(getApiErrorMessage(error));
         },
       },
     );
   };
 
   const handleResend = () => {
-    resendOtp(undefined, {
+    resendOtp(phone, {
       onSuccess: () => {
-        setHasError(false);
+        setErrorMessage(null);
         setOtp("");
         restart();
+      },
+      onError: (error) => {
+        setErrorMessage(getApiErrorMessage(error));
       },
     });
   };
 
   return (
-    <AuthLayout
-      title={t("auth.verifyOtp.title", "Code Verification")}
-      subtitle={t("auth.verifyOtp.subtitle", "Code has been sent to your phone number")}
-    >
+    <AuthLayout title={t("auth.verifyOtp.title")} subtitle={t("auth.verifyOtp.subtitle")}>
       <div className="flex w-full flex-col items-center gap-8">
-        <div className="flex flex-col items-center gap-6 w-full">
+        <div className="flex flex-col items-center gap-6">
+          <span className="font-montserrat text-sm text-brand-600">
+            {t("auth.verifyOtp.checkPhone")}: {phone}
+          </span>
 
-          {/* Phone number confirmation link */}
-          <button
-            type="button"
-            className="text-sm font-normal text-[#1490E3] hover:underline transition-all"
-          >
-            {t("auth.verifyOtp.checkPhone", "Check your phone number")}
-            {phone ? `: ${phone}` : ""}
-          </button>
+          <OtpInput value={otp} onChange={handleChange} hasError={!!errorMessage} />
 
-          {/* OTP input field */}
-          <div className="w-full flex justify-center items-center py-2">
-            <OtpInput value={otp} onChange={handleChange} hasError={hasError} />
-          </div>
-
-          {/* Error state or resend countdown */}
-          {hasError ? (
+          {errorMessage ? (
             <div className="flex flex-col items-center gap-2">
-              <span className="text-sm text-red-500 font-medium">
-                {t("auth.verifyOtp.wrongCode", "Wrong code")}
-              </span>
-              <div className="flex items-center gap-2 text-sm">
+              <span className="font-montserrat text-sm text-red-500">{errorMessage}</span>
+              <div className="flex items-center gap-2 font-montserrat text-sm">
                 <button
                   type="button"
                   onClick={handleResend}
                   disabled={isResending}
-                  className="text-[#145DB8] font-medium hover:underline"
+                  className="text-brand-600"
                 >
-                  {t("auth.verifyOtp.resend", "Resend")}
+                  {t("auth.verifyOtp.resend")}
                 </button>
-                <span className="text-[#99A2AB]">{t("auth.verifyOtp.or", "or")}</span>
+                <span className="text-neutral-400">{t("auth.verifyOtp.or")}</span>
                 <button
                   type="button"
                   onClick={() => navigate(-1)}
-                  className="text-[#145DB8] font-medium hover:underline"
+                  className="text-brand-600"
                 >
-                  {t("auth.verifyOtp.enterAnotherPhone", "Enter another phone")}
+                  {t("auth.verifyOtp.enterAnotherPhone")}
                 </button>
               </div>
             </div>
           ) : (
-            <span className="text-sm text-[#404448]">
+            <span className="font-montserrat text-sm text-neutral-500">
               {isFinished ? (
-                <button
-                  type="button"
-                  onClick={handleResend}
-                  className="text-[#145DB8] font-medium hover:underline"
-                >
-                  {t("auth.verifyOtp.resend", "Resend")}
+                <button type="button" onClick={handleResend} className="text-brand-600">
+                  {t("auth.verifyOtp.resend")}
                 </button>
               ) : (
-                `${t("auth.verifyOtp.resendIn", "Resend code in")} ${secondsLeft} s`
+                t("auth.verifyOtp.resendIn", { seconds: secondsLeft })
               )}
             </span>
           )}
         </div>
 
-        {/* Verify button */}
-        <Button
-          onClick={handleVerify}
-          isLoading={isVerifying}
-          disabled={otp.length < 4}
-          className="w-full h-[48px] bg-[#145DB8] hover:bg-[#104b94] text-white rounded-[8px] text-base font-medium transition-colors"
-        >
-          {isVerifying
-            ? t("auth.verifyOtp.submitting", "Verifying...")
-            : t("auth.verifyOtp.submit", "Verify")}
+        <Button onClick={handleVerify} isLoading={isVerifying} disabled={otp.length < 4}>
+          {isVerifying ? t("auth.verifyOtp.submitting") : t("auth.verifyOtp.submit")}
         </Button>
       </div>
     </AuthLayout>
