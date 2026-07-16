@@ -1,28 +1,33 @@
 import { Button } from "@/components/ui/button"
 import { FaStar } from "react-icons/fa";
-import svg from "../../../assets/navicon.jpg"
 import { Clock } from "lucide-react";
+import type { TDoctor } from "../types/types";
+import { useNavigate } from "react-router-dom";
 
-function DoctorCard({title, location, rating, time, salary}:{}) {
+function DoctorCard({name, address, rating, opening_hours, consultation_price, image, id}: TDoctor) {
+    const firstDay = Object.keys(opening_hours)[0] as keyof typeof opening_hours;
+    const firstTime = opening_hours[firstDay]?.[0];
+    const navigate = useNavigate();
+
     return (
-        <div className="p-3 rounded-xl shadow-[0_0_12px_rgba(0,0,0,0.1)]">
+        <div className="p-3 rounded-xl shadow-[0_0_6px_rgba(0,0,0,0.1)]">
             <div className="flex gap-3 pb-2">
-                <img src={svg} alt="doctor img" width={70} className="rounded-lg"/>
+                <img src={image} alt="doctor img" height={40} width={80} className="rounded-lg bg-cover"/>
                 <div className="">
-                    <h3 className="font-semibold">Mohamed Hassan</h3>
-                    <p className="text-sm text-gray">Orthopedic | El-nasr Hospital</p>
+                    <h3 className="font-semibold">{name}</h3>
+                    <p className="text-sm text-gray h-6 overflow-hidden">{address}</p>
                     <div className="flex gap-3 items-center mt-1">
-                        <p className="flex items-center gap-1"><FaStar className="text-stars"/> 4.8</p>
-                        <p className="flex items-center gap-1"><Clock className="h-4"/> 9:30am - 8:00pm</p>
+                        <p className="flex items-center gap-1"><FaStar className="text-stars"/> {rating}</p>
+                        <p className="flex items-center gap-1"><Clock className="h-4"/>{`${firstTime?.from}am - ${24-(parseInt(firstTime?.to.split(':')[0] || '0'))}pm`}</p>
                     </div>
                 </div>
             </div>
             <hr />
             <div className="flex justify-between mb-2">
                 <p>Price<span className="text-gray">/hour</span></p>
-                <h3 className="text-error">$350</h3>
+                <h3 className="text-error">${consultation_price}</h3>
             </div>
-            <Button className="w-full py-5 cursor-pointe bg-main-blue">Book appointment</Button>
+                <Button onClick={()=>navigate(`/appointments/${id}`)} className="w-full py-5 cursor-pointer bg-main-blue border-brand hover:bg-white hover:text-brand transition-all">Book appointment</Button>
         </div>
     )
 }

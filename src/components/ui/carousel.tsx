@@ -142,7 +142,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
       <div
         className={cn(
           "flex",
-          orientation === "horizontal" ? "ml-8 mr-4" : "-mt-4 flex-col",
+          orientation === "horizontal" ? "ml-7 mr-4" : "-mt-4 flex-col",
           className
         )}
         {...props}
@@ -160,7 +160,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full overflow-hidden",
+        "min-w-0 shrink-0 grow-0 basis-full overflow-hidden w-full",
         orientation === "horizontal" ? "" : "pt-4",
         className
       )}
@@ -180,10 +180,10 @@ function CarouselPrevious({
   return (
     <Button
       data-slot="carousel-previous"
-      variant={variant}
+      // variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full",
+        "absolute touch-manipulation rounded-full bg-gray-50 border-gray hover:bg-gray-100",
         orientation === "horizontal"
           ? "inset-y-0 left-0 my-auto"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -193,7 +193,7 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <ChevronLeftIcon />
+      <ChevronLeftIcon className="text-black hover:text-brand" />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -201,7 +201,7 @@ function CarouselPrevious({
 
 function CarouselNext({
   className,
-  variant = "outline",
+  // variant = "outline",
   size = "icon-sm",
   ...props
 }: React.ComponentProps<typeof Button>) {
@@ -210,12 +210,12 @@ function CarouselNext({
   return (
     <Button
       data-slot="carousel-next"
-      variant={variant}
+      // variant={variant}
       size={size}
       className={cn(
-        "absolute touch-manipulation rounded-full",
+        "absolute touch-manipulation rounded-full bg-gray-50 border-gray hover:bg-gray-100",
         orientation === "horizontal"
-          ? "inset-y-0 right-0 my-auto"
+          ? "inset-y-0 right-0 my-auto "
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -223,7 +223,7 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <ChevronRightIcon />
+      <ChevronRightIcon className="text-black  hover:text-brand" />
       <span className="sr-only">Next slide</span>
     </Button>
   )

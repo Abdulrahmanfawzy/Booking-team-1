@@ -47,12 +47,14 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
       </div>
 
       {/* CTA button */}
-      <button
-        type="button"
-        className={cn('mt-3', 'w-full', 'rounded-lg', 'bg-blue-800', 'py-2.5', 'text-sm', 'font-medium', 'text-white', 'transition-colors', 'hover:bg-blue-900', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-800', 'focus-visible:ring-offset-2')}
-      >
-        Book appointment
-      </button>
+      <div className="mt-2 w-full flex justify-center">
+        <Link
+          to={`/doctors/${doctor.id}`}
+          className={cn('w-full', 'rounded-lg', 'bg-blue-800', 'py-2', 'text-sm', 'font-medium', 'text-white', 'transition-colors', 'hover:bg-blue-900', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-800', 'focus-visible:ring-offset-2')}
+        >
+          Book appointment
+        </Link>
+      </div>
     </div>
   );
 }
@@ -87,7 +89,7 @@ export default function TopRatedDoctors({ doctors = [] }: Props) {
 
         {/* Controls */}
         <div className={cn('flex', 'shrink-0', 'items-center', 'gap-2', 'items-right', 'lg:mr-10')}>
-          <Link to={'/search'}
+          <Link to={'/doctors'}
             className={cn('rounded-lg', 'border', 'border-gray-200', 'px-4', 'py-2', 'text-sm', 'font-medium', 'text-blue-800', 'transition-colors', 'hover:bg-blue-50')}
           >
             View All

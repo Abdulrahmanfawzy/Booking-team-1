@@ -32,11 +32,11 @@ const router = createBrowserRouter([
 
   ...authRoutes,
 
-   {
+  {
     element: <MainLayout />,
     children: [
       { path: "/home", element: <HomePage /> },
-      { path: "/search", element: <SearchDoctorsPage /> },
+      { path: "/doctors", element: <SearchDoctorsPage /> },
       { path: "/contact-us", element: <ContactUs /> },
     ],
   },
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       {
         element: <MainLayout />,
         children: [
-          { path: "/appointments", element: <AppointmentPage /> },
+          { path: "/appointments/:id", element: <AppointmentPage /> },
           { path: "/profile", element: <ProfilePage /> },
           { path: "/booking", element: <Booking /> },
         ],

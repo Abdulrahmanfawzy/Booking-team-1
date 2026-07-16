@@ -1,26 +1,34 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-function Map({ position, markerText, doctors = [] }) {
-  console.log("Doctors:", doctors);
+function ResizeMap() {
+  const map = useMap();
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [map]);
+
+  return null;
+}
+
+function Map({ position, markerText, doctors = [], className = "" }) {
   if (!position) return <p>Loading...</p>;
 
   return (
     <MapContainer
       center={position}
-      zoom={13}
-      scrollWheelZoom
+      zoom={16}
       className={cn(
-        "w-[250px]",
-        "md:w-[350px]",
-        "lg:w-[500px]",
-        "h-64",
-        "md:h-80",
-        "lg:h-[400px]",
-        "rounded-2xl"
+        "rounded-2xl w-[250px] md:w-[350px] lg:w-full h-64 md:h-80 lg:h-80 z-5",
+        className
       )}
     >
+      <ResizeMap />
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       {/* موقع المستخدم */}
