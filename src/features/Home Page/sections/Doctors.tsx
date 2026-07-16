@@ -2,16 +2,7 @@ import { useRef } from "react";
 import { Star, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-
-interface Doctor {
-  id: number;
-  name: string;
-  specialty: string;
-  hospital: string;
-  rating: number;
-  consultation_price: number;
-  image: string | null;
-}
+import type { Doctor } from "../types/doctorTypes";
 
 interface Props {
   doctors: Doctor[];
@@ -30,7 +21,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         <div className={cn('min-w-0', 'text-left')}>
           <p className={cn('truncate', 'font-semibold', 'text-gray-900')}>{doctor.name}</p>
           <p className={cn('truncate', 'text-sm', 'text-gray-500')}>
-            {doctor.specialty} | {doctor.hospital}
+            {typeof doctor.specialty === 'string' ? doctor.specialty : doctor.specialty?.name} | {doctor.hospital}
           </p>
 
           {/* Rating & hours */}

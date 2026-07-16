@@ -6,6 +6,7 @@ import FAQ from "../sections/FAQ";
 import DownloadAppCard from "../sections/DownloadApp";
 import TopRatedDoctors from "@/features/Home Page/sections/Doctors";
 import { getHomeData } from "@/features/Home Page/Services/homeApi";
+import { cn } from "@/lib/utils";
 
 export default function HomePage() {
   const [position, setPosition] = useState<[number, number] | null>(null);
@@ -48,7 +49,7 @@ export default function HomePage() {
   }, [position]);
 
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
+    <div className={cn('flex', 'flex-col', 'items-center', 'justify-center', 'py-20', 'text-center')}>
       <Hero />
       <HowItWorks />
 

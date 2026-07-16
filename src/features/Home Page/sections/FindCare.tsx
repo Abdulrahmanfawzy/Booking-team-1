@@ -1,21 +1,39 @@
-import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
 import Map from "@/components/shared/Map";
-
-interface NearbyDoctor {
-  id: number;
-  latitude: number;
-  longitude: number;
-  [key: string]: unknown;
-}
+import { useDoctors } from "../hooks/useDoctors";
+import { useState } from "react";
+import SearchCombobox from "@/components/shared/SearchInpotHome";
+import type { Doctor } from "@/features/Home Page/types/doctorTypes";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface Props {
   position: [number, number] | null;
-  nearbyDoctors: NearbyDoctor[];
+  nearbyDoctors: Doctor[];
 }
 
 export default function FindCare({ position, nearbyDoctors = [] }: Props) {
+  const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounce(query, 300);
+  
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  const [doctorFromSearchLocation, setDoctorFromSearchLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
+
+  // We only want to search if there is a query, but if not we might still want to fetch nearby doctors,
+  // or we can use the ones passed in via props. If FindCare is supposed to search, we use debouncedQuery.
+  // We'll pass the debouncedQuery to useDoctors. The hook can decide if it's enabled.
+  const { data, isLoading } = useDoctors({
+    keyword: query,
+    latitude: position?.[0] || 30.0444,
+    longitude: position?.[1] || 31.2357,
+    page: 1,
+  });
+
+  // If query is empty, we can show the nearbyDoctors or what the API returns.
+  // The user says "not request while query is empty". So if query is empty, we can rely on nearbyDoctors.
+  const searchResults = query.trim() === "" ? nearbyDoctors : data?.data?.doctors ?? [];
   return (
     <section
       className={cn(
@@ -79,35 +97,87 @@ export default function FindCare({ position, nearbyDoctors = [] }: Props) {
               "lg:mx-0"
             )}
           >
-            <div className={cn("relative", "w-full", "flex", "items-center")}>
-              <Search className={cn("absolute", "left-2.5", "h-4", "w-4", "text-slate-500")} />
-              <Input
-                placeholder="Search by Location"
-                className={cn(
-                  "w-full",
-                  "h-10",
-                  "pl-9",
-                  "py-2",
-                  "bg-white",
-                  "!bg-white",
-                  "border",
-                  "border-main-blue",
-                  "text-main-blue",
-                  "placeholder:text-main-blue",
-                  "md:text-xs"
-                )}
-              />
-            </div>
+          </div>
+          <div className={cn("w-full", "mx-auto", "text-center", "mt-4")}>
+            <SearchCombobox
+              items={searchResults}
+              query={query}
+              setQuery={setQuery}
+              value={selectedDoctor}
+              onChange={(val) => {
+                setSelectedDoctor(val);
+                if (val && typeof val.latitude === "number" && typeof val.longitude === "number") {
+                  setDoctorFromSearchLocation({
+                    latitude: val.latitude,
+                    longitude: val.longitude,
+                  });
+                } else {
+                  setDoctorFromSearchLocation(null);
+                }
+              }}
+              placeholder="Search for a doctor"
+              isLoading={debouncedQuery !== query || isLoading}
+              className={cn("max-w-xl", "mx-auto", "lg:mx-0", "text-left")}
+              getKey={(doctor) => doctor.id}
+              getValue={(doctor) => doctor}
+              renderValue={(doctor) => (
+                <div className={cn("flex", "items-baseline", "gap-2", "w-full", "overflow-hidden")}>
+                  <span className={cn("font-semibold", "text-slate-800", "text-sm", "md:text-base", "shrink-0")}>
+                    {doctor.name}
+                  </span>
+                  <span
+                    className={cn(
+                      "text-xs",
+                      "md:text-sm",
+                      "text-slate-400",
+                      "font-normal",
+                      "truncate",
+                      "flex-1"
+                    )}
+                  >
+                    {doctor.address || (typeof doctor.specialty === 'string' ? doctor.specialty : doctor.specialty?.name) || ""}
+                  </span>
+                </div>
+              )}
+              renderItem={(doctor) => (
+                <div className={cn("flex", "items-center", "gap-3", "py-0.5", "w-full")}>
+                  <img
+                    src={doctor.image || "https://avatar.iran.liara.run/public/doctor"}
+                    alt={doctor.name}
+                    className={cn(
+                      "w-10",
+                      "h-10",
+                      "rounded-full",
+                      "object-cover",
+                      "border",
+                      "border-slate-100",
+                      "bg-slate-50",
+                      "shrink-0"
+                    )}
+                  />
+                  <div className={cn("min-w-0", "flex-1")}>
+                    <p className={cn("font-medium", "text-slate-800", "text-sm", "md:text-base", "truncate")}>
+                      {doctor.name}
+                    </p>
+                    <p className={cn("text-xs", "md:text-sm", "text-slate-400", "truncate")}>
+                      {doctor.address || (typeof doctor.specialty === 'string' ? doctor.specialty : doctor.specialty?.name) || ""}
+                    </p>
+                  </div>
+                </div>
+              )}
+            />
           </div>
         </div>
       </div>
 
-      <div className={cn("w-full", "lg:w-1/2", "flex", "justify-center", "items-center" ,'')}>
+      <div className={cn("w-full", "lg:w-1/2", "flex", "justify-center", "items-center",'lg:w-[500px]', 'lg:h-[400px]')}>
         {position && (
           <Map
             position={position}
-            markerText="موقعك"
-            doctors={nearbyDoctors}
+            markerText="Your Location"
+            doctors={searchResults}
+            selectedDoctor={selectedDoctor}
+            doctorFromSearchLocation={doctorFromSearchLocation}
           />
         )}
       </div>
