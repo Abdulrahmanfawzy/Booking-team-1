@@ -5,7 +5,7 @@ import { TbMessagesFilled } from "react-icons/tb";
 import { useState } from "react";
 
 import StatCard from "./components/StatCard";
-import { DoctorMap } from "../../components/shared/Map";
+import Map from "../../components/shared/Map";
 
 export default function DoctorProfile({ doctor }) {
   const [expanded, setExpanded] = useState(false);
@@ -91,7 +91,7 @@ export default function DoctorProfile({ doctor }) {
         </p>
       </div>
       {/* Location */}
-      <DoctorMap
+      <Map
         center={[
           doctor.location.latitude,
           doctor.location.longitude,

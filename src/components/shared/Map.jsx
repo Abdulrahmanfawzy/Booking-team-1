@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-function Map({ position, markerText, className=""}) {
+function Map({ position, markerText, doctors=[], className=""}) {
   if (!position) return <p>Loading...</p>;
 
   return (
