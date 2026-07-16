@@ -1,6 +1,8 @@
 import { CalendarDays, MapPin } from "lucide-react";
 import { useState } from "react";
 import { bookingApi } from "../api/booking.api";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export default function PaymentModal({
   isOpen,
@@ -42,13 +44,13 @@ export default function PaymentModal({
       console.log("Booking Body:", body);
 
       const data = await bookingApi.createBooking(body);
+      toast.success("Appointment booked successfully");
 
       console.log(data);
 
       onClose();
     } catch (error) {
-      console.log(error.response?.data);
-      console.log(error.response?.status);
+      toast.error(error.response?.data?.message || "Failed to book appointment");
     } finally {
       setLoading(false);
     }
@@ -89,7 +91,7 @@ export default function PaymentModal({
           </div>
         </div>
 
-        <div className="mt-8 flex items-center justify-between">
+        <div className="mt-5 flex items-center justify-between">
           <h3 className="text-2xl font-semibold">
             Consultation Price
           </h3>
@@ -99,13 +101,14 @@ export default function PaymentModal({
           </span>
         </div>
 
-        <button
+        <Button
+          variant="brand"
           onClick={handleBooking}
           disabled={loading}
-          className="mt-8 w-full rounded-xl bg-main-blue py-4 font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+          className="w-full mt-2 py-5 cursor-pointer"
         >
           {loading ? "Booking..." : "Book Appointment"}
-        </button>
+        </Button>
       </div>
     </div>
   );
