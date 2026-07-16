@@ -169,6 +169,7 @@ export default function FindCare({ position, nearbyDoctors = [] }: Props) {
           </div>
         </div>
       </div>
+ Home-Page-API
 
       <div className={cn("w-full", "lg:w-1/2", "flex", "justify-center", "items-center",'lg:w-[500px]', 'lg:h-[400px]')}>
         {position && (
@@ -180,6 +181,10 @@ export default function FindCare({ position, nearbyDoctors = [] }: Props) {
             doctorFromSearchLocation={doctorFromSearchLocation}
           />
         )}
+      <div  className={cn("w-full", "lg:w-1/2",'flex', 'justify-center', 'items-center','z-[-1]', 'lg:w-[500px]', 'lg:h-[400px]')}>
+      {position && (
+        <Map position={position} markerText="موقعك"/>
+      )}
       </div>
     </section>
   );

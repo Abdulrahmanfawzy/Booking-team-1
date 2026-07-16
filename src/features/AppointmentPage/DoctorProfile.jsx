@@ -2,45 +2,56 @@ import { Heart, MessageCircleMore } from "lucide-react";
 import { BsFillPeopleFill, BsAwardFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import { TbMessagesFilled } from "react-icons/tb";
+import { useEffect, useState } from "react";
+
 import StatCard from "./components/StatCard";
-import { useState } from "react";
-import PaymentModal from "./components/PaymentModal";
 import Map from "../../components/shared/Map";
 
 export default function DoctorProfile({ doctor }) {
-
   const [expanded, setExpanded] = useState(false);
+  const [mapKey, setMapKey] = useState(0);
+
+  const MAX_LENGTH = 85;
+  const isLongText = doctor.about.length > MAX_LENGTH;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMapKey((prev) => prev + 1);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [doctor.id]);
 
   const stats = [
     {
       Icon: BsFillPeopleFill,
-      value: doctor.stats.patients,
+      value: "--",
       label: "patients",
     },
     {
       Icon: BsAwardFill,
-      value: doctor.stats.experience,
+      value: `${doctor.experience_years}+`,
       label: "experience",
     },
     {
       Icon: FaStar,
-      value: doctor.stats.rating,
+      value: doctor.rating.average,
       label: "rating",
     },
     {
       Icon: TbMessagesFilled,
-      value: doctor.stats.reviews,
+      value: doctor.rating.count,
       label: "reviews",
     },
   ];
 
   return (
-    <div className="relative flex flex-col gap-5 bg-gray-100 text-black rounded-xl p-5">
+    <div className="relative flex flex-col gap-5 rounded-xl bg-gray-100 p-5 text-black">
       {/* First Section */}
       <div className="flex justify-between">
         <Heart className="cursor-pointer" />
 
-        <div className="text-center flex flex-col gap-1">
+        <div className="flex flex-col gap-1 text-center">
           <img
             src={doctor.image}
             className="rounded-full"
@@ -48,7 +59,7 @@ export default function DoctorProfile({ doctor }) {
           />
 
           <p className="font-semibold">{doctor.name}</p>
-          <p className="text-gray">{doctor.specialty}</p>
+          <p className="text-gray">{doctor.specialty.name}</p>
         </div>
 
         <MessageCircleMore className="cursor-pointer" />
@@ -66,31 +77,42 @@ export default function DoctorProfile({ doctor }) {
         ))}
       </div>
 
-      {/* About me section */}
+      {/* About */}
       <div>
         <h2 className="text-xl">About me</h2>
 
-        <p className="text-gray text-sm">
-          {expanded
-            ? doctor.about
-            : `${doctor.about.slice(0, 85)}... `}
+        <p className="text-sm text-gray">
+          {isLongText ? (
+            <>
+              {expanded
+                ? doctor.about
+                : `${doctor.about.slice(0, MAX_LENGTH)}... `}
 
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="text-main-blue font-medium hover:underline"
-          >
-            {expanded ? "Read less" : "Read more"}
-          </button>
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="font-medium text-main-blue hover:underline"
+              >
+                {expanded ? "Read less" : "Read more"}
+              </button>
+            </>
+          ) : (
+            doctor.about
+          )}
         </p>
       </div>
 
       {/* Location */}
       <Map
-        center={[30.0444, 31.2357]}
-        markerPosition={[30.0444, 31.2357]}
-        popupContent={
+        key={mapKey}
+        position={[
+          doctor.location.latitude,
+          doctor.location.longitude,
+        ]}
+        markerText={
           <>
-            <h3 className="font-bold">Dr Ahmed <br />Dentist</h3>
+            <h3 className="font-bold">{doctor.name}</h3>
+            <p>{doctor.specialty.name}</p>
+            <p>{doctor.location.address}</p>
           </>
         }
       />
