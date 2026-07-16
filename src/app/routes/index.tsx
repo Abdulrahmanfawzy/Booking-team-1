@@ -36,7 +36,6 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "/home", element: <HomePage /> },
-      { path: "/doctors", element: <SearchDoctorsPage /> },
       { path: "/contact-us", element: <ContactUs /> },
     ],
   },
@@ -47,6 +46,7 @@ const router = createBrowserRouter([
       {
         element: <MainLayout />,
         children: [
+          { path: "/doctors", element: <SearchDoctorsPage /> },
           { path: "/appointments/:id", element: <AppointmentPage /> },
           { path: "/profile", element: <ProfilePage /> },
           { path: "/booking", element: <Booking /> },

@@ -56,12 +56,14 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
       </div>
 
       {/* CTA button */}
-      <button
-        type="button"
-        className={cn('mt-3', 'w-full', 'rounded-lg', 'bg-blue-800', 'py-2.5', 'text-sm', 'font-medium', 'text-white', 'transition-colors', 'hover:bg-blue-900', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-800', 'focus-visible:ring-offset-2')}
-      >
-        Book appointment
-      </button>
+      <div className="mt-2 w-full flex justify-center">
+        <Link
+          to={`/doctors/${doctor.id}`}
+          className={cn('w-full', 'rounded-lg', 'bg-blue-800', 'py-2', 'text-sm', 'font-medium', 'text-white', 'transition-colors', 'hover:bg-blue-900', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-800', 'focus-visible:ring-offset-2')}
+        >
+          Book appointment
+        </Link>
+      </div>
     </div>
   );
 }
