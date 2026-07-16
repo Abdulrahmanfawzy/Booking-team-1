@@ -101,15 +101,11 @@ export default function FindCare({ position, nearbyDoctors = [] }: Props) {
           </div>
         </div>
       </div>
-
-      <div className={cn("w-full", "lg:w-1/2", "flex", "justify-center", "items-center" ,'')}>
-        {position && (
-          <Map
-            position={position}
-            markerText="موقعك"
-            doctors={nearbyDoctors}
-          />
-        )}
+      </div>
+      <div  className={cn("w-full", "lg:w-1/2",'flex', 'justify-center', 'items-center','z-[-1]', 'lg:w-[500px]', 'lg:h-[400px]')}>
+      {position && (
+  <Map position={position} markerText="موقعك"/>
+)}
       </div>
     </section>
   );
