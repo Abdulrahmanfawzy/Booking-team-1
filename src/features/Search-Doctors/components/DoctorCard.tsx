@@ -27,7 +27,7 @@ function DoctorCard({name, address, rating, opening_hours, consultation_price, i
                 <p>Price<span className="text-gray">/hour</span></p>
                 <h3 className="text-error">${consultation_price}</h3>
             </div>
-                <Button onClick={()=>navigate(`${id}`)} className="w-full py-5 cursor-pointer bg-main-blue border-brand hover:bg-white hover:text-brand transition-all">Book appointment</Button>
+                <Button onClick={()=>navigate(`/appointments/${id}`)} className="w-full py-5 cursor-pointer bg-main-blue border-brand hover:bg-white hover:text-brand transition-all">Book appointment</Button>
         </div>
     )
 }

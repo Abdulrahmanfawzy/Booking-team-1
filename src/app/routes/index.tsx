@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       {
         element: <MainLayout />,
         children: [
-          { path: "/appointments", element: <AppointmentPage /> },
+          { path: "/appointments/:id", element: <AppointmentPage /> },
           { path: "/profile", element: <ProfilePage /> },
           { path: "/booking", element: <Booking /> },
         ],
