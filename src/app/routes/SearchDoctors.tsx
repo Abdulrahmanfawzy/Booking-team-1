@@ -84,10 +84,10 @@ function SearchDoctorsPage() {
                 }
             </div>
             </div>
-            <div className="flex justify-between mt-2">
+            {doctorsList?.data?.doctors.length>0 && <div className="flex justify-between mt-2">
                 <Button className="py-5 px-15 bg-white border-main-blue text-main-blue cursor-pointer hover:bg-white">Last Page</Button>
                 <Button className="py-5 px-15 bg-white border-main-blue text-main-blue cursor-pointer hover:bg-white">Next Page</Button>
-            </div>
+            </div>}
             </div>
         </div>
 

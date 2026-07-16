@@ -96,7 +96,7 @@ export default function TopRatedDoctors({ doctors = [] }: Props) {
 
         {/* Controls */}
         <div className={cn('flex', 'shrink-0', 'items-center', 'gap-2', 'items-right', 'lg:mr-10')}>
-          <Link to={'/search'}
+          <Link to={'/doctors'}
             className={cn('rounded-lg', 'border', 'border-gray-200', 'px-4', 'py-2', 'text-sm', 'font-medium', 'text-blue-800', 'transition-colors', 'hover:bg-blue-50')}
           >
             View All
