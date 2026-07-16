@@ -36,6 +36,7 @@ function SearchDoctorsPage() {
     const [pageNum, setPageNum]= useState<number>(1);
 
     const {isLoading: doctorsLoad,data: doctorsList,error: doctorsError} = useDoctorsQuery({specialSelectedId: specialSelectedId, gender:gender, keyword:keyword, page:pageNum})
+    console.log("doctorsList", doctorsList);
     
     return (
         <div
@@ -85,7 +86,7 @@ function SearchDoctorsPage() {
             </div>
             </div>
             {doctorsList?.data?.doctors.length>0 && <div className="flex justify-between mt-2">
-                <Button className="py-5 px-15 bg-white border-main-blue text-main-blue cursor-pointer hover:bg-white">Last Page</Button>
+                <Button className={`${doctorsList?.data.pagination.current_page==1?'cursor-not-allowed border-gray-300 text-gray-400':'cursor-pointer  border-main-blue text-main-blue'} py-5 px-15 bg-white hover:bg-white`}>Last Page</Button>
                 <Button className="py-5 px-15 bg-white border-main-blue text-main-blue cursor-pointer hover:bg-white">Next Page</Button>
             </div>}
             </div>
