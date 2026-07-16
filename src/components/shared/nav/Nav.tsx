@@ -1,7 +1,11 @@
 import SearchInput from './SearchInput'
 import logo from "@/assets/logo.svg"
 import NavActions from './NavActions'
+import { useNavigate } from 'react-router-dom'
+
 export default function Nav({padding}) {
+  const navigate = useNavigate()
+
   return (
     <header className={`${padding} sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100`}>
       <div className="flex justify-between max-w-7xl py-2 mx-auto">
@@ -11,6 +15,7 @@ export default function Nav({padding}) {
           src={logo}
           alt="Cure Logo"
           className=""
+          onClick={() => navigate('/home')}
         />
 
         {/* Search */}
