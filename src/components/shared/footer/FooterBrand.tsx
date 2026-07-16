@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Facebook from "@/assets/facebook.svg";
 import Whatsapp from "@/assets/whatsapp.svg";
-import Youtube from "@/assets/youtube.svg";
+import Youtube from "@/assets/Youtube.svg";
 import Linkedin from "@/assets/Linkedin.svg";
 import logo from "@/assets/Logowhite.svg";
 
