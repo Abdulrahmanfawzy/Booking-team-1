@@ -30,7 +30,7 @@ export function SignInPage() {
   const onSubmit = (values: SignInSchema) => {
     mutate(values, {
       onSuccess: () => {
-        navigate("/profile", { replace: true });
+        navigate("/home", { replace: true });
       },
       onError: (error) => {
         toast.error(getApiErrorMessage(error));
@@ -47,7 +47,7 @@ export function SignInPage() {
           });
           return;
         }
-        navigate("/profile", { replace: true });
+        navigate("/home", { replace: true });
       },
       onError: (error) => {
         toast.error(getApiErrorMessage(error));
