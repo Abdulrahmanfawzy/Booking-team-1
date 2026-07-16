@@ -1,5 +1,7 @@
+import { X } from "lucide-react";
 import { useState } from "react";
-import { axiosInstance } from "@/services/axiosInstance";
+import { ratingApi } from "../api/rating.api";
+import ClickableStarsRating from "./ClickableStarsRating";
 
 export default function RatingModal({
   isOpen,
@@ -7,74 +9,94 @@ export default function RatingModal({
   bookingId,
   doctorId,
 }) {
-
-  const [rating, setRating] = useState(0);
+  const [currentRate, setCurrentRate] = useState(0);
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
-
   async function handleSubmit() {
+    if (currentRate === 0) {
+      alert("Please select a rating.");
+      return;
+    }
+
     try {
-      await axiosInstance.post("/reviews", {
+      setLoading(true);
+
+      const body = {
         booking_id: bookingId,
         doctor_id: doctorId,
-        rating,
-        comment,
-      });
+        rating: currentRate,
+        comment: comment.trim(),
+      };
+
+      console.log("Rating Body:", body);
+
+      const data = await ratingApi.addRating(body);
+
+      console.log(data);
 
       onClose();
-
     } catch (error) {
-      console.error("Failed to add review:", error);
+      console.error(error.response?.data || error);
+    } finally {
+      setLoading(false);
     }
   }
 
-
   return (
     <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
     >
-
       <div
+        className="flex w-90 flex-col rounded-xl bg-white p-5"
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-md rounded-xl bg-white p-6"
       >
+        {/* Heading */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-black">Your Rate</h1>
 
-        <h2 className="mb-4 text-xl font-bold">
-          Add Review
-        </h2>
+          <X
+            className="cursor-pointer text-black"
+            onClick={onClose}
+          />
+        </div>
 
+        {/* Rate */}
+        <div className="flex flex-row items-center justify-between py-4">
+          <ClickableStarsRating
+            currentRate={currentRate}
+            setCurrentRate={setCurrentRate}
+          />
 
-        {/* Stars Component */}
-        <input
-          type="number"
-          min="1"
-          max="5"
-          value={rating}
-          onChange={(e) => setRating(Number(e.target.value))}
-          className="mb-4 w-full rounded border p-2"
-        />
+          <h1 className="text-3xl font-light text-black">
+            {currentRate}/5
+          </h1>
+        </div>
 
+        {/* Review */}
+        <div>
+          <h1 className="text-black">Your Review</h1>
 
-        <textarea
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Write your review..."
-          className="mb-4 w-full rounded border p-2"
-        />
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Message"
+            rows={5}
+            className="my-3 w-full resize-none rounded-md border border-gray px-4 py-2 text-black placeholder-gray focus:border-main-blue focus:outline-none"
+          />
 
-
-        <button
-          onClick={handleSubmit}
-          className="rounded-lg bg-primary px-5 py-2 text-white"
-        >
-          Submit Review
-        </button>
-
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="h-8 w-full rounded-sm bg-main-blue text-white disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {loading ? "Sending..." : "Send Review"}
+          </button>
+        </div>
       </div>
-
     </div>
   );
 }

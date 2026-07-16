@@ -2,15 +2,25 @@ import { Heart, MessageCircleMore } from "lucide-react";
 import { BsFillPeopleFill, BsAwardFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import { TbMessagesFilled } from "react-icons/tb";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import StatCard from "./components/StatCard";
 import Map from "../../components/shared/Map";
 
 export default function DoctorProfile({ doctor }) {
   const [expanded, setExpanded] = useState(false);
+  const [mapKey, setMapKey] = useState(0);
+
   const MAX_LENGTH = 85;
   const isLongText = doctor.about.length > MAX_LENGTH;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMapKey((prev) => prev + 1);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [doctor.id]);
 
   const stats = [
     {
@@ -36,12 +46,12 @@ export default function DoctorProfile({ doctor }) {
   ];
 
   return (
-    <div className="relative flex flex-col gap-5 bg-gray-100 text-black rounded-xl p-5">
+    <div className="relative flex flex-col gap-5 rounded-xl bg-gray-100 p-5 text-black">
       {/* First Section */}
       <div className="flex justify-between">
         <Heart className="cursor-pointer" />
 
-        <div className="text-center flex flex-col gap-1">
+        <div className="flex flex-col gap-1 text-center">
           <img
             src={doctor.image}
             className="rounded-full"
@@ -67,11 +77,11 @@ export default function DoctorProfile({ doctor }) {
         ))}
       </div>
 
-      {/* About me */}
+      {/* About */}
       <div>
         <h2 className="text-xl">About me</h2>
 
-        <p className="text-gray text-sm">
+        <p className="text-sm text-gray">
           {isLongText ? (
             <>
               {expanded
@@ -80,7 +90,7 @@ export default function DoctorProfile({ doctor }) {
 
               <button
                 onClick={() => setExpanded(!expanded)}
-                className="text-main-blue font-medium hover:underline"
+                className="font-medium text-main-blue hover:underline"
               >
                 {expanded ? "Read less" : "Read more"}
               </button>
@@ -90,17 +100,15 @@ export default function DoctorProfile({ doctor }) {
           )}
         </p>
       </div>
+
       {/* Location */}
       <Map
-        center={[
+        key={mapKey}
+        position={[
           doctor.location.latitude,
           doctor.location.longitude,
         ]}
-        markerPosition={[
-          doctor.location.latitude,
-          doctor.location.longitude,
-        ]}
-        popupContent={
+        markerText={
           <>
             <h3 className="font-bold">{doctor.name}</h3>
             <p>{doctor.specialty.name}</p>

@@ -18,31 +18,30 @@ export default function PaymentModal({
   function formatTime(time) {
     if (!time) return "";
 
-    if (time.includes("AM") || time.includes("PM")) {
-      return time;
-    }
-
     const [hour, minute] = time.split(":");
 
-    let h = Number(hour);
+    let h = parseInt(hour, 10);
     const period = h >= 12 ? "PM" : "AM";
 
-    h = h % 12;
-    if (h === 0) h = 12;
+    h = h % 12 || 12;
 
-    return `${h}:${minute} ${period}`;
+    return `${String(h).padStart(2, "0")}:${minute} ${period}`;
   }
 
   async function handleBooking() {
     try {
       setLoading(true);
 
-      const data = await bookingApi.createBooking({
+      const body = {
         doctor_id: doctor.id,
         appointment_date: appointmentDate,
         appointment_time: formatTime(appointmentTime),
         consultation_type: "clinic",
-      });
+      };
+
+      console.log("Booking Body:", body);
+
+      const data = await bookingApi.createBooking(body);
 
       console.log(data);
 
@@ -64,7 +63,6 @@ export default function PaymentModal({
         className="w-full max-w-md rounded-3xl bg-white p-6 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Doctor */}
         <div className="flex items-center gap-4">
           <img
             src={doctor.image}
@@ -84,7 +82,6 @@ export default function PaymentModal({
           </div>
         </div>
 
-        {/* Appointment */}
         <div className="mt-8 rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-sm">
             <CalendarDays size={18} className="text-main-blue" />
@@ -92,7 +89,6 @@ export default function PaymentModal({
           </div>
         </div>
 
-        {/* Price */}
         <div className="mt-8 flex items-center justify-between">
           <h3 className="text-2xl font-semibold">
             Consultation Price
@@ -103,7 +99,6 @@ export default function PaymentModal({
           </span>
         </div>
 
-        {/* Book Button */}
         <button
           onClick={handleBooking}
           disabled={loading}
