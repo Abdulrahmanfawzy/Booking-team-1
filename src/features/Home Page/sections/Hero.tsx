@@ -1,5 +1,5 @@
-import {cn } from "@/lib/utils";
-import { 
+import { cn } from "@/lib/utils";
+import {
     MapPin,
     Calendar,
     Sparkles,
@@ -65,10 +65,10 @@ export default function Hero() {
                     </div>
 
                     <div className={cn('mt-8', 'flex', 'flex-wrap', 'items-center', 'justify-center', 'gap-3')}>
-                        <Link to={"/search"} className={cn('rounded-full', 'bg-blue-600', 'px-6', 'py-3', 'text-sm', 'font-medium', 'text-white', 'shadow-sm', 'shadow-blue-200', 'transition', 'hover:bg-blue-700', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-500', 'focus-visible:ring-offset-2')}>
+                        <Link to={"/doctors"} className={cn('rounded-full', 'bg-blue-600', 'px-6', 'py-3', 'text-sm', 'font-medium', 'text-white', 'shadow-sm', 'shadow-blue-200', 'transition', 'hover:bg-blue-700', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-500', 'focus-visible:ring-offset-2')}>
                             Get started
                         </Link>
-                        <Link to={"/search"} className={cn('flex', 'items-center', 'gap-2', 'rounded-full', 'border', 'border-slate-200', 'px-6', 'py-3', 'text-sm', 'font-medium', 'text-blue-600', 'transition', 'hover:bg-slate-50', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-500', 'focus-visible:ring-offset-2')}>
+                        <Link to={"/doctors"} className={cn('flex', 'items-center', 'gap-2', 'rounded-full', 'border', 'border-slate-200', 'px-6', 'py-3', 'text-sm', 'font-medium', 'text-blue-600', 'transition', 'hover:bg-slate-50', 'focus-visible:outline-none', 'focus-visible:ring-2', 'focus-visible:ring-blue-500', 'focus-visible:ring-offset-2')}>
                             <Calendar size={16} /> Book Appointment
                         </Link>
                     </div>
