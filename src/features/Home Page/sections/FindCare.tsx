@@ -84,9 +84,9 @@ export default function FindCare() {
         </div>
       </div>
       </div>
-      <div  className={cn("w-full", "lg:w-1/2",'flex', 'justify-center', 'items-center','z-[-1]')}>
+      <div  className={cn("w-full", "lg:w-1/2",'flex', 'justify-center', 'items-center','z-[-1]', 'lg:w-[500px]', 'lg:h-[400px]')}>
       {position && (
-  <Map position={position} markerText="موقعك" />
+  <Map position={position} markerText="موقعك"/>
 )}
       </div>
     </section>

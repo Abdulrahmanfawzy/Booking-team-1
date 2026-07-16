@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { cn } from "@/lib/utils";
 
-function Map({ position, markerText }) {
+function Map({ position, markerText, className=""}) {
   if (!position) return <p>Loading...</p>;
 
   return (
@@ -9,13 +9,8 @@ function Map({ position, markerText }) {
   center={position}
   zoom={16}
   className={cn(
-    "w-[250px]",
-    "md:w-[350px]",
-    "lg:w-[500px]",
-    "h-64",
-    "md:h-80",
-    "lg:h-[400px]",
-    "rounded-2xl"
+    "rounded-2xl w-[250px] md:w-[350px] lg:w-full lg:h-full h-64 md:h-80",
+    className
   )}
 >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
