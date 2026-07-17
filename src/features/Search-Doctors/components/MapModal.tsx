@@ -10,7 +10,7 @@ import Map from "@/components/shared/Map"
 
 export function MapModal({open, setOpen}: {open:boolean, setOpen: (open:boolean)=>void}) {
 
-    const {isLoading,data,error} = useDoctorsQuery({gender:'', specialSelectedId:'', keyword:'', page:1})
+    const {isLoading,data,error} = useDoctorsQuery({gender:'', keyword:'', page:1})
 
 const [position, setPosition] = useState<[number, number] | null>(null);    
     useEffect(() => {
