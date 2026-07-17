@@ -1,14 +1,36 @@
 import { Pencil } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { bookingApi } from "./api/booking.api.js";
 import StarsRating from "./components/StarsRating";
 import HumanRatingCard from "./components/HumanRatingCard";
 import RatingModal from "./components/RatingModal";
 
 export default function Rating({ doctor }) {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [bookingId, setBookingId] = useState(null);
 
-  const bookingId = doctor.booking_id;
+  useEffect(() => {
+    async function fetchBookings() {
+      try {
+        const data = await bookingApi.getBookings();
+
+        const booking = data.data.find(
+          (item) =>
+            Number(item.doctor.id) === Number(doctor.id) &&
+            item.status === "completed"
+        );
+
+        if (booking) {
+          setBookingId(booking.id);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchBookings();
+  }, [doctor.id]);
 
   return (
     <>
@@ -58,13 +80,12 @@ export default function Rating({ doctor }) {
         </div>
       </div>
 
-      {isRatingModalOpen && (
-        <RatingModal
-          closeModal={setIsRatingModalOpen}
-          doctorId={doctor.id}
-          bookingId={bookingId}
-        />
-      )}
+      <RatingModal
+        isOpen={isRatingModalOpen}
+        onClose={() => setIsRatingModalOpen(false)}
+        doctorId={doctor.id}
+        bookingId={bookingId}
+      />
     </>
   );
 }

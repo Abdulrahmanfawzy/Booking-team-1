@@ -5,7 +5,7 @@ export function ProtectedRoutes() {
   const token = localStorage.getItem("auth_token");
 
   if (!token) {
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+    return <Navigate to="/login" />;
   }
 
   return <Outlet />;

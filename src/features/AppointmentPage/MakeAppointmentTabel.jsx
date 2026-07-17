@@ -13,21 +13,25 @@ export default function MakeAppointmentTabel({ doctor }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [bookingError, setBookingError] = useState("");
 
-  const availableSlots = doctor.available_slots || {};
+  const availableSlots = doctor.available_slots || [];
+  const openingHours = doctor.opening_hours || {};
 
-  const hasAvailableDates = Object.keys(availableSlots).length > 0;
+  const hasAvailableDates = availableSlots.length > 0;
 
   const formattedDate = selectedDate
-    ? selectedDate.toISOString().split("T")[0]
+    ? selectedDate.toLocaleDateString("en-CA")
     : "";
 
-  const freeHours = formattedDate
-    ? availableSlots[formattedDate] || []
-    : [];
+  const dayMap = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
+  const freeHours =
+    selectedDate && openingHours[dayMap[selectedDate.getDay()]]
+      ? availableSlots
+      : [];
 
   const filterDate = (date) => {
-    const current = date.toISOString().split("T")[0];
-    return Object.keys(availableSlots).includes(current);
+    const dayKey = dayMap[date.getDay()];
+    return Boolean(openingHours[dayKey]);
   };
 
   return (
@@ -66,7 +70,6 @@ export default function MakeAppointmentTabel({ doctor }) {
           )}
         </header>
 
-        {/* Hours */}
         {hasAvailableDates && (
           <div className="flex flex-wrap gap-4">
             {freeHours.length > 0 ? (
@@ -91,7 +94,6 @@ export default function MakeAppointmentTabel({ doctor }) {
           </div>
         )}
 
-        {/* Selected appointment */}
         {hasAvailableDates && (
           <div className="flex items-center py-3 justify-between">
             <div>
@@ -139,9 +141,7 @@ export default function MakeAppointmentTabel({ doctor }) {
             : ""
         }
         appointmentDate={formattedDate}
-        appointmentTime={
-          activeHour !== null ? freeHours[activeHour] : ""
-        }
+        appointmentTime={activeHour !== null ? freeHours[activeHour] : ""}
         price={doctor.consultation_price}
       />
     </>
