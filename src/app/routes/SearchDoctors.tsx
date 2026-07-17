@@ -23,17 +23,23 @@ import useSpecialistsQuery from "@/features/Search-Doctors/hooks/useSpecialistsQ
 import type { TDoctor } from "@/features/Search-Doctors/types/types";
 
 import { useState } from "react";
+import { parseAsInteger, useQueryState } from 'nuqs'
 
 function SearchDoctorsPage() {
+
     const [openSide, setOpenSide] = useState(true);
     const [openMap, setOpenMap] = useState(false);
 
     const { isLoading: specialistsLoad, data: specialists, error: specialistsError } = useSpecialistsQuery();
 
-    const [specialSelectedId, setSpecialSelectedId]= useState<number | string>('');
-    const [gender, setGender]= useState<string>('');
-    const [keyword, setKeyword]= useState<string>('');
-    const [pageNum, setPageNum]= useState<number>(1);
+    // const [specialSelectedId, setSpecialSelectedId]= useState<number | string>('');
+    // const [gender, setGender]= useState<string>('');
+    // const [keyword, setKeyword]= useState<string>('');
+    // const [pageNum, setPageNum]= useState<number>(1);
+    const [specialSelectedId, setSpecialSelectedId]= useQueryState('specialist_id', parseAsInteger);
+    const [gender, setGender]= useQueryState('gender', { defaultValue: ''});
+    const [keyword, setKeyword]= useQueryState('keyword', {defaultValue: ''});
+    const [pageNum, setPageNum]= useQueryState('page', parseAsInteger.withDefault(1));
 
     const {isLoading: doctorsLoad,data: doctorsList,error: doctorsError} = useDoctorsQuery({specialSelectedId: specialSelectedId, gender:gender, keyword:keyword, page:pageNum})
     console.log("doctorsList", doctorsList);

@@ -1,9 +1,10 @@
 import SearchInput from './SearchInput'
 import logo from "@/assets/logo.svg"
 import NavActions from './NavActions'
+export default function Nav({padding}:{padding?: string}) {
 import { useNavigate } from 'react-router-dom'
 
-export default function Nav({padding}) {
+export default function Nav({padding}:{padding:string}) {
   const navigate = useNavigate()
 
   return (

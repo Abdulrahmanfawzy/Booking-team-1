@@ -2,7 +2,7 @@ import getDoctorsData from "../api/GetDoctorsData";
 import { useQuery } from "@tanstack/react-query";
 
 interface IProps {
-    specialSelectedId?: number|string
+    specialSelectedId?: number | null
     gender?: string
     keyword?:string
     page?:number

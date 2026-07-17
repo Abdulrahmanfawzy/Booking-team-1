@@ -2,12 +2,12 @@ import { useState } from "react";
 import type { IconType } from "react-icons/lib";
 
 interface IProps{
-    id: number|string,
+    id: number,
     name: string, 
     image?: string | null, 
     Icon: IconType, 
-    specialSelectedId: number | string, 
-    setSpecialSelectedId: (specialtyId: number | string) => void
+    specialSelectedId: number | null, 
+    setSpecialSelectedId: (specialtyId: number) => void
 }
 
 function SpecialtyCard({id, name, image, Icon, specialSelectedId, setSpecialSelectedId}:IProps) {

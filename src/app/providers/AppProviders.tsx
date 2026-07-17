@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import "@/i18n/index";
+import { NuqsAdapter } from 'nuqs/adapters/react'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,7 +13,9 @@ const queryClient = new QueryClient({
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <NuqsAdapter>
+        {children}
+      </NuqsAdapter>
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
