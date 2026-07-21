@@ -9,7 +9,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import User from '@/assets/user.svg'
 
 const menuItems = [
@@ -34,11 +34,13 @@ const menuItems = [
 export default function MobileMenu() {
   const [profileClicked, setProfileClicked] = useState(false);
   const token = localStorage.getItem("auth_token");
+  const navigate = useNavigate();
   const handleClick = () => {
     setProfileClicked((prev) => !prev);
   };
   const handleLogout = () => {
     localStorage.removeItem("auth_token");
+    navigate("/");
     setProfileClicked(false);
   };
   return (
@@ -149,7 +151,7 @@ export default function MobileMenu() {
         {/* Logout */}
 
         <button
-          className="mt-12 mx-2 flex items-center gap-2 lg:gap-2 lg:mt-10 text-red-500 mx-6 lg:mx-9"
+          className="mt-12 mx-2 flex cursor-pointer items-center gap-2 lg:gap-2 lg:mt-10 text-red-500 mx-6 lg:mx-9"
           onClick={handleLogout}
         >
 

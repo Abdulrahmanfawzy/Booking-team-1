@@ -1,5 +1,6 @@
 import { Camera, User, MapPin, LockKeyhole, LogOut } from "lucide-react";
 import { user } from "../../../assets/";
+import { useNavigate } from "react-router-dom";
 
 const menuItems = [
   { icon: User, label: "Personal information", active: true },
@@ -7,8 +8,10 @@ const menuItems = [
 ];
 
 const ProfileSidebar = () => {
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("auth_token");
+    navigate("/");
   };
   return (
     <div className="flex flex-col justify-center items-center w-[318px] h-[559px] rounded-[13px] p-[32px] gap-[48px] bg-neutral-blue">
@@ -53,7 +56,7 @@ const ProfileSidebar = () => {
           </button>
         ))}
 
-        <button onClick={handleLogout} className="flex flex-row items-center w-[254px] h-[48px] px-[16px] py-[8px] gap-[8px] rounded-[6px]">
+        <button onClick={handleLogout} className="flex cursor-pointer flex-row items-center w-[254px] h-[48px] px-[16px] py-[8px] gap-[8px] rounded-[6px]">
           <LogOut className="w-[24px] h-[24px] text-error" />
           <span className="font-[Montserrat] text-[16px] leading-[20px] text-center text-error">
             Log out
