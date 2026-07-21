@@ -7,6 +7,9 @@ const menuItems = [
 ];
 
 const ProfileSidebar = () => {
+  const handleLogout = () => {
+    localStorage.removeItem("auth_token");
+  };
   return (
     <div className="flex flex-col justify-center items-center w-[318px] h-[559px] rounded-[13px] p-[32px] gap-[48px] bg-neutral-blue">
       <div className="flex flex-col justify-center items-center w-[176px] h-[172px] gap-[16px]">
@@ -40,9 +43,8 @@ const ProfileSidebar = () => {
         {menuItems.map((item) => (
           <button
             key={item.label}
-            className={`flex flex-row items-center w-[254px] h-[48px] px-[16px] gap-[9px] rounded-[8px] ${
-              item.active ? "border border-main-blue" : ""
-            }`}
+            className={`flex flex-row items-center w-[254px] h-[48px] px-[16px] gap-[9px] rounded-[8px] ${item.active ? "border border-main-blue" : ""
+              }`}
           >
             <item.icon className="w-[24px] h-[24px] text-text-secondary" />
             <span className="font-[Montserrat] text-[16px] leading-[20px] text-center text-text-secondary">
@@ -51,7 +53,7 @@ const ProfileSidebar = () => {
           </button>
         ))}
 
-        <button className="flex flex-row items-center w-[254px] h-[48px] px-[16px] py-[8px] gap-[8px] rounded-[6px]">
+        <button onClick={handleLogout} className="flex flex-row items-center w-[254px] h-[48px] px-[16px] py-[8px] gap-[8px] rounded-[6px]">
           <LogOut className="w-[24px] h-[24px] text-error" />
           <span className="font-[Montserrat] text-[16px] leading-[20px] text-center text-error">
             Log out

@@ -37,6 +37,10 @@ export default function MobileMenu() {
   const handleClick = () => {
     setProfileClicked((prev) => !prev);
   };
+  const handleLogout = () => {
+    localStorage.removeItem("auth_token");
+    setProfileClicked(false);
+  };
   return (
     <div className="mt-2">
       <div className="">
@@ -146,6 +150,7 @@ export default function MobileMenu() {
 
         <button
           className="mt-12 mx-2 flex items-center gap-2 lg:gap-2 lg:mt-10 text-red-500 mx-6 lg:mx-9"
+          onClick={handleLogout}
         >
 
           <LogOut size={24} className="lg:size-5" strokeWidth={1} />
