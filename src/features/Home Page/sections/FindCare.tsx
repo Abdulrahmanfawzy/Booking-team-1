@@ -45,7 +45,8 @@ export default function FindCare({ position, nearbyDoctors = [] }: Props) {
         "py-14",
         "sm:px-6",
         "sm:py-20",
-        "lg:px-10"
+        "lg:px-10",
+        "w-full"
       )}
     >
       {/* Left Column: Text & Search */}
